@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhananjay Sagar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#f5f5f5;
+  font-family:Inter,sans-serif;
+  overflow-x:hidden;
+}
+
+.hero{
+  min-height:100vh;
+  background:#f5f5f5;
+  padding:30px 60px;
+}
+
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-family:cursive;
+  font-size:32px;
+  color:#111;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px;
+  color:#111;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  background:#54ff4d;
+  border-radius:50%;
+}
+
+.hero-content{
+  min-height:85vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.left{
+  max-width:850px;
+}
+
+.title{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+
+.title h1{
+  font-family:Georgia,serif;
+  font-size:44px;
+  font-weight:400;
+  line-height:1.1;
+}
+
+.light{
+  color:#a5a5a5;
+}
+
+.pill{
+  width:72px;
+  height:46px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#ddd;
+  flex-shrink:0;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.pill img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.beige{
+  background:#d8c8a5;
+}
+
+.black{
+  background:#090909;
+}
+
+.description{
+  margin-top:28px;
+  max-width:560px;
+  font-size:16px;
+  line-height:1.7;
+  color:#666;
+}
+
+.btn{
+  display:inline-block;
+  margin-top:35px;
+  background:#000;
+  color:#fff;
+  text-decoration:none;
+  padding:16px 34px;
+  border-radius:999px;
+  font-size:18px;
+  font-weight:500;
+  box-shadow:0 15px 30px rgba(0,0,0,.2);
+}
+
+@media(max-width:992px){
+
+.hero{
+  padding:30px;
+}
+
+.title h1{
+  font-size:34px;
+}
+
+.pill{
+  width:60px;
+  height:40px;
+}
+
+.description{
+  font-size:15px;
+}
+
+.btn{
+  font-size:16px;
+  padding:14px 28px;
+}
+}
+
+@media(max-width:600px){
+
+.logo{
+  font-size:24px;
+}
+
+.status{
+  font-size:12px;
+}
+
+.title h1{
+  font-size:28px;
+}
+
+.pill{
+  width:50px;
+  height:34px;
+}
+
+.description{
+  font-size:14px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+  <div class="navbar">
+    <div class="logo">Dhananjay Sagar</div>
+
+    <div class="status">
+      <div class="dot"></div>
+      available for work
+    </div>
+  </div>
+
+  <div class="hero-content">
+
+    <div class="left">
+
+      <div class="title">
+        <h1 class="light">Hey, I'm</h1>
+
+        <div class="pill">
+          <!-- Replace this image with your photo -->
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43?w=500" alt="">
+        </div>
+
+        <h1>Dhananjay Sagar</h1>
+      </div>
+
+      <div class="title">
+        <h1>UI/UX & Product Designer</h1>
+
+        <div class="pill beige"></div>
+
+        <div class="pill black"></div>
+      </div>
+
+      <div class="title">
+        <h1 class="light">Living in</h1>
+
+        <div class="pill beige"></div>
+
+        <h1>Pune</h1>
+      </div>
+
+      <p class="description">
+        I design thoughtful digital experiences, creating intuitive products and scalable solutions for startups and businesses.
+      </p>
+
+      <a href="#" class="btn">
+        Get In Touch Today ↗
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+</body>
+</html>
