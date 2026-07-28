@@ -1,657 +1,370 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dhananjay Sagar - UI/UX Designer</title>
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/comic-book.css" />
+  </head>
+  <body>
+    <!-- CURSOR & BACKGROUND -->
+    <div id="customCursor" class="custom-cursor"></div>
+    <canvas id="bgCanvas" class="bg-canvas"></canvas>
+    <canvas id="trailCanvas" class="trail-canvas"></canvas>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dhananjay Sagar</title>
+    <!-- NAVBAR -->
+    <nav>
+      <div class="nav-profile">
+        <img
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&fit=crop"
+          alt="Dhananjay"
+        />
+        Available for work <span class="dot"></span>
+      </div>
+      <button class="contact-btn" id="contactBtn">Contact</button>
+    </nav>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Georgia:ital@0;1&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+    <!-- GLOBAL 3D FLOATING CARD (Transforms into Project Card) -->
+    <div class="sticky-visual-container">
+      <div class="card-wrapper" id="cardWrapper">
+        <div class="card-3d" id="card3D">
+          <!-- Face A: Also acts as the final Project Card -->
+          <div class="card-face card-front">
+            <img id="faceA-img" src="" alt="Dynamic Image A" />
 
-</head>
+            <!-- HIDDEN UNTIL PROJECT SECTION -->
+            <div id="projectUI" style="opacity: 0">
+              <div class="inner-shadow"></div>
+              <div class="project-content">
+                <h2 class="project-title">
+                  Evaluating Error & Confirmation Models
+                </h2>
+                <p class="project-desc">
+                  A deep dive into analyzing user experience gaps to design
+                  highly effective, frictionless feedback loops for digital
+                  products.
+                </p>
+              </div>
+            </div>
+          </div>
 
-<body>
-
-  <div class="cursor"></div>
-
-  <!-- ═══ HERO ═══ -->
-  <section class="hero" id="home-section">
-
-    <video class="hero-video-bg" autoplay loop muted playsinline>
-      <source src="your-video-file.mp4" type="video/mp4">
-    </video>
-
-    <div class="hero-image-reveal"></div>
-    <canvas id="particle-canvas"></canvas>
-
-    <div class="navbar">
-      <div class="logo">Dhananjay Sagar</div>
-      <div class="status">
-        <div class="dot"></div>
-        available for work
+          <!-- Face B -->
+          <div class="card-face card-back">
+            <img id="faceB-img" src="" alt="Dynamic Image B" />
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="hero-body">
-      <div class="hero-inner">
-        <div class="title">
-          <h1 class="light">Hey, I'm</h1>
-          <div class="pill">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43?w=500" alt="Dhananjay">
-          </div>
-          <h1>Dhananjay Sagar</h1>
+    <!-- SCROLL TRACK -->
+    <div id="scrollTrack">
+      <!-- SECTION 1: HERO (100vh) - UPDATED CONTENT -->
+      <div class="hero-section">
+        <div class="hero-left">
+          <p class="subtitle">DHANANJAY SAGAR</p>
+          <h1 class="huge-text">UI/UX</h1>
         </div>
-        <div class="title">
-          <h1>UI/UX &amp; Product Designer</h1>
-          <div class="pill beige"></div>
-          <div class="pill black"></div>
+        <div class="hero-right">
+          <h1 class="huge-text">DESIGNER</h1>
+          <p class="desc">Product Designer<br />Living in Pune</p>
         </div>
-        <div class="title">
-          <h1 class="light">Living in</h1>
-          <div class="pill beige"></div>
-          <h1>Pune</h1>
-        </div>
-        <p class="description">
-          I design thoughtful digital experiences, creating intuitive products and scalable solutions for startups and
-          businesses.
-        </p>
-        <a href="#" class="btn">Get In Touch Today ↗</a>
       </div>
-    </div>
 
-  </section>
+      <!-- SECTION 2: PROCESS (500vh) -->
+      <div class="process-scroll-container" id="processSection">
+        <div class="process-sticky">
+          <div class="process-content-left">
+            <h2 class="section-title">My Process</h2>
 
-  <!-- ═══ MY DESIGN PROCESS ═══ -->
-  <section class="process-section">
-    <div class="container">
-
-      <p class="section-label">• My Process</p>
-      <h2 class="section-heading">My Design Process</h2>
-
-      <div class="accordion">
-
-        <div class="accordion-item active">
-          <div class="accordion-header">
-            <div class="accordion-title">
-              <h3>1. Empathize</h3>
-              <p>Research &amp; Understand Users</p>
-            </div>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-content-inner">
-              <p>Conduct stakeholder interviews, user interviews, empathy mapping, surveys and contextual inquiry to
-                understand user needs, pain points and business goals.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">
-            <div class="accordion-title">
-              <h3>2. Define</h3>
-              <p>Problem Definition</p>
-            </div>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-content-inner">
-              <p>Create personas, define problem statements, identify opportunities and establish success metrics for
-                the product and business.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">
-            <div class="accordion-title">
-              <h3>3. Ideate</h3>
-              <p>Generate Solutions</p>
-            </div>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-content-inner">
-              <p>Brainstorm ideas, create user flows, information architecture and low-fidelity wireframes to explore
-                solutions.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">
-            <div class="accordion-title">
-              <h3>4. Prototype</h3>
-              <p>Build &amp; Validate</p>
-            </div>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-content-inner">
-              <p>Design high-fidelity interfaces, interactive prototypes and validate concepts with stakeholders and
-                users.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <div class="accordion-header">
-            <div class="accordion-title">
-              <h3>5. Test</h3>
-              <p>Improve Experience</p>
-            </div>
-          </div>
-          <div class="accordion-content">
-            <div class="accordion-content-inner">
-              <p>Conduct usability testing, heuristic evaluations and iterate continuously based on user feedback.</p>
+            <div class="process-list">
+              <div class="process-item" data-step="0">
+                <div class="process-header">
+                  <span class="process-title">1. Empathize</span
+                  ><span class="process-subtitle"
+                    >Research & Understand Users</span
+                  >
+                </div>
+                <div class="process-body">
+                  Conduct stakeholder interviews, user interviews, empathy
+                  mapping, surveys and contextual inquiry.
+                </div>
+              </div>
+              <div class="process-item" data-step="1">
+                <div class="process-header">
+                  <span class="process-title">2. Define</span
+                  ><span class="process-subtitle">Problem Definition</span>
+                </div>
+                <div class="process-body">
+                  Analyze user experience gaps and define clear user problems to
+                  guide product development.
+                </div>
+              </div>
+              <div class="process-item" data-step="2">
+                <div class="process-header">
+                  <span class="process-title">3. Ideate</span
+                  ><span class="process-subtitle">Generate Solutions</span>
+                </div>
+                <div class="process-body">
+                  Brainstorm effective solutions, including designing robust
+                  error and confirmation models.
+                </div>
+              </div>
+              <div class="process-item" data-step="3">
+                <div class="process-header">
+                  <span class="process-title">4. Prototype</span
+                  ><span class="process-subtitle">Build & Validate</span>
+                </div>
+                <div class="process-body">
+                  Create low to high-fidelity wireframes and interactive
+                  prototypes.
+                </div>
+              </div>
+              <div class="process-item" data-step="4">
+                <div class="process-header">
+                  <span class="process-title">5. Test</span
+                  ><span class="process-subtitle">Improve Experience</span>
+                </div>
+                <div class="process-body">
+                  Conduct usability testing sessions to validate solutions with
+                  real users.
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
-    </div>
-  </section>
 
-  <!-- ═══ SKILLS & PROFILE ═══ -->
-  <section class="profile-section">
-    <div class="container">
+      <!-- SECTION 3: PROJECT CARD HOLDER (200vh) -->
+      <div class="project-scroll-container">
+        <div class="project-sticky">
+          <!-- Visuals are handled by the global 3D card! -->
+        </div>
+      </div>
 
-      <p class="section-label">• Skills &amp; Expertise</p>
-      <h2 class="section-heading">The knowledge that powers my designs</h2>
+      <!-- SECTION 4: 3D TOOL CUBES -->
+      <div class="tools-section">
+        <div id="canvas-container">
+          <div id="header">Design Arsenal</div>
+          <div id="instruction">Hover over the giant cubes to bump them</div>
+        </div>
+      </div>
 
-      <div class="profile-card">
-        <div class="banner">
-          <span class="banner-text">UI/UX &amp; Product Designer</span>
-          <div class="profile-avatar-wrap">
-            <div class="profile-avatar">
-              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43?w=500" alt="Dhananjay Sagar">
+      <!-- SECTION 5: COMIC BOOK CASE STUDY -->
+      <section class="comic-project-section" id="comicProjectSection">
+        <!-- HUD HEADER -->
+        <div class="hud-header">
+          <h1 class="hud-title">DHANANJAY SAGAR</h1>
+          <div class="hud-hint" id="hudHint">
+            ⌛ OPENING BOOK IN 2 SECONDS...
+          </div>
+        </div>
+
+        <!-- 3D BOOK STAGE -->
+        <div class="book-stage" id="bookStage">
+          <div class="book-container" id="bookContainer">
+            <!-- Spine Center Binding -->
+            <div class="book-spine"></div>
+
+            <!-- PAGE 1: FRONT COVER / INSIDE PAGE 1 (YOGNII OVERVIEW) -->
+            <div class="page" data-page="0">
+              <!-- FRONT COVER (CLOSED BOOK LOOK) -->
+              <div class="page-face cover-style">
+                <div>
+                  <div class="cover-badge">VOL. 01 • ORIGINAL EDITION</div>
+                  <h2 class="cover-title">THE DESIGN<br />CHRONICLES</h2>
+                  <div class="cover-author">BY DHANANJAY SAGAR</div>
+                  <div class="gesture-prompt">
+                    👉 CLICK OR SCROLL TO FLIP PAGES
+                  </div>
+                </div>
+              </div>
+              <!-- PAGE 1 (LEFT SPREAD INSIDE COVER) -->
+              <div class="page-face page-back">
+                <div>
+                  <span class="action-caption"
+                    >PROJECT 01 • RESEARCH & OVERVIEW</span
+                  >
+                  <h3 class="comic-title" style="margin-top: 5px">
+                    Yognii - Women Health Platform
+                  </h3>
+                  <div class="speech-bubble">
+                    "How do we analyze psychological stress without judging the
+                    user?"
+                  </div>
+                  <p class="comic-desc">
+                    Designed a holistic mental & physical health application
+                    introducing the Freud Score algorithm, contextual gap
+                    analysis, and mood tracking.
+                  </p>
+                </div>
+                <div class="page-num">PAGE 01</div>
+              </div>
+            </div>
+
+            <!-- PAGE 2: PROJECT 1 MULTI-IMAGE GALLERY / PROJECT 2 OVERVIEW -->
+            <div class="page" data-page="1">
+              <!-- PAGE 2 (RIGHT SPREAD 1: SCROLLABLE MULTI-IMAGE GALLERY) -->
+              <div class="page-face">
+                <div>
+                  <span class="action-caption"
+                    >PROJECT 01 • MULTI-SCREEN GALLERY (SCROLL ↕)</span
+                  >
+                  <div class="comic-panel-scrollable">
+                    <div>
+                      <img
+                        class="panel-img"
+                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
+                        alt="Yognii Screen 1"
+                      />
+                      <div class="img-caption">
+                        Screen 1: Freud Score & Mood Sliders
+                      </div>
+                    </div>
+                    <div>
+                      <img
+                        class="panel-img"
+                        src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop"
+                        alt="Yognii Screen 2"
+                      />
+                      <div class="img-caption">
+                        Screen 2: Audio Voice Journaling UI
+                      </div>
+                    </div>
+                  </div>
+                  <p class="comic-desc">
+                    Scroll inside the panel above to view all high-fidelity
+                    prototype screens!
+                  </p>
+                </div>
+                <div class="page-num">PAGE 02</div>
+              </div>
+              <!-- PAGE 3 (LEFT SPREAD 2: PROJECT 02 OVERVIEW) -->
+              <div class="page-face page-back">
+                <div>
+                  <span class="action-caption"
+                    >PROJECT 02 • RESEARCH & OVERVIEW</span
+                  >
+                  <h3 class="comic-title" style="margin-top: 5px">
+                    AI Resume Parser & Screening
+                  </h3>
+                  <div class="speech-bubble">
+                    "Recruiters spend 80% of their time manually correcting
+                    parsed data!"
+                  </div>
+                  <p class="comic-desc">
+                    Architected human-in-the-loop review flows, confidence state
+                    indicators, and automated field correction models.
+                  </p>
+                </div>
+                <div class="page-num">PAGE 03</div>
+              </div>
+            </div>
+
+            <!-- PAGE 3: PROJECT 2 MULTI-IMAGE GALLERY / GREETING & CONTACT PAGE -->
+            <div class="page" data-page="2">
+              <!-- PAGE 4 (RIGHT SPREAD 2: SCROLLABLE MULTI-IMAGE GALLERY) -->
+              <div class="page-face">
+                <div>
+                  <span class="action-caption"
+                    >PROJECT 02 • PARSER UI GALLERY (SCROLL ↕)</span
+                  >
+                  <div class="comic-panel-scrollable">
+                    <div>
+                      <img
+                        class="panel-img"
+                        src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop"
+                        alt="Parser Screen 1"
+                      />
+                      <div class="img-caption">
+                        Screen 1: Document Extraction Review
+                      </div>
+                    </div>
+                    <div>
+                      <img
+                        class="panel-img"
+                        src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop"
+                        alt="Parser Screen 2"
+                      />
+                      <div class="img-caption">
+                        Screen 2: High-Contrast Confidence Chips
+                      </div>
+                    </div>
+                  </div>
+                  <p class="comic-desc">
+                    Reduced recruiter screening time by 35% through
+                    human-in-the-loop validation.
+                  </p>
+                </div>
+                <div class="page-num">PAGE 04</div>
+              </div>
+              <!-- FINAL GREETING & THANK YOU PAGE -->
+              <div class="page-face page-back cover-style">
+                <div class="greeting-box">
+                  <img
+                    class="greeting-avatar"
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&fit=crop"
+                    alt="Dhananjay Sagar"
+                  />
+                  <h2
+                    class="cover-title"
+                    style="font-size: 2.2rem; margin-bottom: 5px"
+                  >
+                    THANK YOU!
+                  </h2>
+                  <div class="speech-bubble" style="margin-bottom: 5px">
+                    "Let's build intuitive, user-centered digital products
+                    together!"
+                  </div>
+                  <div
+                    style="
+                      font-size: 0.85rem;
+                      color: var(--text-main);
+                      font-family: &quot;Inter&quot;, sans-serif;
+                    "
+                  >
+                    ✉️ dhananjay.sagar@gmail.com | 📍 Pune, India
+                  </div>
+                  <div
+                    class="cover-badge reset-btn-badge"
+                    style="background: var(--accent-indigo); margin-top: 10px"
+                    id="resetBookBtn"
+                  >
+                    🔄 RE-OPEN BOOK
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="profile-body">
-          <h3 class="profile-name">Dhananjay Sagar</h3>
-          <p class="profile-role">UI/UX &amp; Product Designer · Pune, India</p>
 
-          <div class="skill-tags">
-            <span>Figma</span>
-            <span>Design Systems</span>
-            <span>UX Research</span>
-            <span>Product Strategy</span>
-            <span>Spline</span>
-            <span>Stakeholder Communication</span>
-            <span>WCAG Accessibility</span>
-            <span>Motion Graphics</span>
-            <span>Interaction Design</span>
-            <span>Heuristic Evaluation</span>
-          </div>
+        <!-- CONTROLS -->
+        <div class="controls">
+          <button class="btn" id="prevPageBtn">&larr; Previous Page</button>
+          <button class="btn" id="nextPageBtn">Next Page &rarr;</button>
         </div>
-      </div>
-
-      <!-- Experience Timeline Block -->
-      <div class="experience-wrapper">
-        <div class="exp-card">
-          <div class="exp-info">
-            <h4>UI/UX and Visual Designer</h4>
-            <p>High Tech Info System, Jabalpur, MP</p>
-          </div>
-          <div class="exp-right">
-            <span class="exp-date">Dec 2025 – Present</span>
-            <span class="exp-duration">8 Mo</span>
-          </div>
-        </div>
-        <div class="exp-card">
-          <div class="exp-info">
-            <h4>UI/UX and Visual Designer</h4>
-            <p>Fin Coopers Tech India Pvt. Ltd, Indore, MP</p>
-          </div>
-          <div class="exp-right">
-            <span class="exp-date">May 2024 – Nov 2025</span>
-            <span class="exp-duration">1Y 7M</span>
-          </div>
-        </div>
-        <div class="exp-card">
-          <div class="exp-info">
-            <h4>UI/UX and Visual Designer</h4>
-            <p>Coder Farm Pvt. Ltd, Indore, MP</p>
-          </div>
-          <div class="exp-right">
-            <span class="exp-date">Mar 2023 – May 2024</span>
-            <span class="exp-duration">1Y 3M</span>
-          </div>
-        </div>
-        <div class="exp-card">
-          <div class="exp-info">
-            <h4>UI/UX Intern and Graphic Designer</h4>
-            <p>Coder Farm Pvt. Ltd, Indore, MP</p>
-          </div>
-          <div class="exp-right">
-            <span class="exp-date">Oct 2022 – Mar 2023</span>
-            <span class="exp-duration">6 Mo</span>
-          </div>
-        </div>
-        <div class="total-exp-card">
-          <div>
-            <div class="label">Total Experience</div>
-            <div class="number">3.11 Yrs</div>
-            <div class="sub">Almost 4 years of experience</div>
-          </div>
-          <div class="badge">
-            3<br>Companies
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══ CONTACT ═══ -->
-  <section class="contact-section">
-    <div class="container">
-
-      <h2 class="contact-heading">Let's Connect</h2>
-      <p class="contact-description">Feel free to reach out for collaborations, freelance projects, or just to say
-        hello.</p>
-
-      <div class="contact-row">
-        <span>Location</span>
-        <a href="#">Jabalpur, Madhya Pradesh, India</a>
-      </div>
-      <div class="contact-row">
-        <span>Phone</span>
-        <a href="tel:+917489455607">+91 7489455607</a>
-      </div>
-      <div class="contact-row">
-        <span>Email</span>
-        <a href="mailto:dhananjay.sagar@gmail.com">dhananjay.sagar@gmail.com</a>
-      </div>
-      <div class="contact-row">
-        <span>LinkedIn</span>
-        <a href="https://linkedin.com/in/dhananjaysagar" target="_blank">linkedin.com/in/dhananjaysagar</a>
-      </div>
-      <div class="contact-row">
-        <span>Behance</span>
-        <a href="https://behance.net/dhanajayrajput" target="_blank">behance.net/dhanajayrajput</a>
-      </div>
-
-      <div class="footer-bottom">
-        © 2026 Dhananjay Sagar · UI/UX &amp; Product Designer
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══ VERTICAL STACK STICKY CONTROLS ═══ -->
-  <div class="sticky-controls-stack">
-    <!-- Interactive View Projects Overlay Trigger Button -->
-    <div class="control-circle-btn" id="open-projects-trigger" aria-label="View Projects Panel">
-      <svg viewBox="0 0 24 24">
-        <path
-          d="M4,6H20V18H4M20,4A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4H20M11,12V9H13V12H16V14H13V17H11V14H8V12H11Z" />
-      </svg>
+      </section>
     </div>
 
-    <!-- Interactive View Resume Overlay Trigger Button -->
-    <div class="control-circle-btn" id="open-resume-trigger" aria-label="View Full Resume">
-      <svg viewBox="0 0 24 24">
-        <path
-          d="M19,3H5C3.89,3 3,3.89 3,5V19C3,20.11 3.89,21 5,21H19C20.11,21 21,20.11 21,19V5C21,3.89 20.11,3 19,3M19,5V19H5V5H19M7,7V9H17V7H7M7,11V13H17V11H7M7,15V17H14V15H7Z" />
-      </svg>
+    <!-- FLOATING BOTTOM RIGHT VERTICAL NAVIGATION DOCK -->
+    <div class="bottom-dock" id="bottomDock">
+      <a href="index.html" class="dock-item dock-accent-home" id="dockHomeBtn" title="Home" data-tooltip="Home">
+        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <a href="RESUMEFORPORTFOLIO.HTML" class="dock-item dock-accent-resume" id="dockResumeBtn" title="Resume" data-tooltip="Resume">
+        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><line x1="10" x2="8" y1="9" y2="9"></line></svg>
+      </a>
+      <a href="PROJECT.html" class="dock-item dock-accent-project" id="dockProjectsBtn" title="Projects" data-tooltip="Projects">
+        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+      </a>
     </div>
 
-    <!-- Full Site Theme Switch Trigger Button -->
-    <div class="control-circle-btn" id="theme-switch-trigger" aria-label="Toggle Layout Theme">
-      <svg viewBox="0 0 24 24">
-        <path
-          d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z" />
-      </svg>
-    </div>
-  </div>
-
-  <!-- ═══ FULL CONTENT PROJECTS OVERLAY PANEL ═══ -->
-  <div class="side-panel" id="projects-panel-container">
-    <div class="panel-header">
-      <h2>My Projects</h2>
-      <div class="header-actions">
-        <button class="close-panel-btn" id="close-projects-trigger" aria-label="Close Projects Layer">&times;</button>
-      </div>
-    </div>
-
-    <div class="panel-content-body">
-      <!-- Filter Section with Clear Button -->
-      <div class="projects-filter-bar">
-        <div class="filter-group">
-          <label for="filter-type">Project Type</label>
-          <select id="filter-type" class="filter-select">
-            <option value="all">All Types</option>
-            <option value="saas">SaaS / Enterprise</option>
-            <option value="ai">AI Product</option>
-            <option value="app">Mobile App</option>
-            <option value="web">Web Design</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label for="filter-role">My Role</label>
-          <select id="filter-role" class="filter-select">
-            <option value="all">All Roles</option>
-            <option value="lead">Lead UI/UX</option>
-            <option value="designer">Visual Designer</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label for="filter-duration">Duration</label>
-          <select id="filter-duration" class="filter-select">
-            <option value="all">Any Duration</option>
-            <option value="short">1 - 3 Months</option>
-            <option value="medium">3 - 6 Months</option>
-            <option value="long">6+ Months</option>
-          </select>
-        </div>
-        <button id="clear-filters-btn" class="clear-btn">Clear All</button>
-      </div>
-
-      <!-- 8 Modern Shuffling Image Cards -->
-      <div class="projects-grid-layout" id="projects-grid">
-
-        <div class="ui-project-card project-card-item" data-type="ai" data-role="lead" data-duration="short">
-          <div class="card-image-stack">
-            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600" class="stack-img pos-0"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600" class="stack-img pos-1"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600" class="stack-img pos-2"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600" class="stack-img pos-3"
-              alt="Project img">
-          </div>
-          <div class="ui-card-content">
-            <h3>AI Resume Parser</h3>
-          </div>
-        </div>
-
-        <div class="ui-project-card project-card-item" data-type="saas" data-role="lead" data-duration="medium">
-          <div class="card-image-stack">
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600" class="stack-img pos-0"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600" class="stack-img pos-1"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" class="stack-img pos-2"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600" class="stack-img pos-3"
-              alt="Project img">
-          </div>
-          <div class="ui-card-content">
-            <h3>Chatbot Builder UX</h3>
-          </div>
-        </div>
-
-        <div class="ui-project-card project-card-item" data-type="saas" data-role="designer" data-duration="long">
-          <div class="card-image-stack">
-            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600" class="stack-img pos-0"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600" class="stack-img pos-1"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600" class="stack-img pos-2"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600" class="stack-img pos-3"
-              alt="Project img">
-          </div>
-          <div class="ui-card-content">
-            <h3>CPaaS Platform</h3>
-          </div>
-        </div>
-
-        <div class="ui-project-card project-card-item" data-type="saas" data-role="lead" data-duration="medium">
-          <div class="card-image-stack">
-            <img src="https://images.unsplash.com/photo-1618044733300-9472054094ee?w=600" class="stack-img pos-0"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=600" class="stack-img pos-1"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1481481600465-b1a131b7d5ed?w=600" class="stack-img pos-2"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600" class="stack-img pos-3"
-              alt="Project img">
-          </div>
-          <div class="ui-card-content">
-            <h3>DocExe Management</h3>
-          </div>
-        </div>
-
-        <div class="ui-project-card project-card-item" data-type="web" data-role="designer" data-duration="long">
-          <div class="card-image-stack">
-            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600" class="stack-img pos-0"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600" class="stack-img pos-1"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1497215848143-69022e399583?w=600" class="stack-img pos-2"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600" class="stack-img pos-3"
-              alt="Project img">
-          </div>
-          <div class="ui-card-content">
-            <h3>Solar System Gov</h3>
-          </div>
-        </div>
-
-        <div class="ui-project-card project-card-item" data-type="saas" data-role="lead" data-duration="short">
-          <div class="card-image-stack">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600" class="stack-img pos-0"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600" class="stack-img pos-1"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=600" class="stack-img pos-2"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1542744094-24638ea0b3b5?w=600" class="stack-img pos-3"
-              alt="Project img">
-          </div>
-          <div class="ui-card-content">
-            <h3>B2B Hiring Portal</h3>
-          </div>
-        </div>
-
-        <div class="ui-project-card project-card-item" data-type="saas" data-role="lead" data-duration="long">
-          <div class="card-image-stack">
-            <img src="https://images.unsplash.com/photo-1542744094-24638ea0b3b5?w=600" class="stack-img pos-0"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600" class="stack-img pos-1"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1520607162513-322f56516c0e?w=600" class="stack-img pos-2"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600" class="stack-img pos-3"
-              alt="Project img">
-          </div>
-          <div class="ui-card-content">
-            <h3>HR Veda</h3>
-          </div>
-        </div>
-
-        <div class="ui-project-card project-card-item" data-type="app" data-role="designer" data-duration="medium">
-          <div class="card-image-stack">
-            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600" class="stack-img pos-0"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=600" class="stack-img pos-1"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=600" class="stack-img pos-2"
-              alt="Project img">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600" class="stack-img pos-3"
-              alt="Project img">
-          </div>
-          <div class="ui-card-content">
-            <h3>Yoginii App</h3>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ FULL CONTENT RESUME OVERLAY PANEL ═══ -->
-  <div class="side-panel" id="resume-panel-container">
-    <div class="panel-header">
-      <h2>Curriculum Vitae</h2>
-      <div class="header-actions">
-        <!-- Direct Download Anchor referencing specified PDF document -->
-        <a href="Dhananjay_Sagar_FINAL_v5.pdf" download class="download-btn">
-          <svg viewBox="0 0 24 24">
-            <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
-          </svg>
-          Download PDF
-        </a>
-        <button class="close-panel-btn" id="close-resume-trigger" aria-label="Close Resume Layer">&times;</button>
-      </div>
-    </div>
-
-    <div class="panel-content-body">
-      <div class="resume-identity-block">
-        <h1>Dhananjay Sagar</h1>
-        <div class="sub-role">UI/UX &amp; AI-Driven Product Design</div>
-        <div class="resume-meta-links-grid">
-          <span>📍 Jabalpur, Madhya Pradesh, India</span>
-          <a href="tel:+917489455607">📞 +91 7489455607</a>
-          <a href="mailto:dhananjay.sagar@gmail.com">✉️ dhananjay.sagar@gmail.com</a>
-          <a href="https://linkedin.com/in/dhananjaysagar" target="_blank">🔗 linkedin.com/in/dhananjaysagar</a>
-          <a href="https://behance.net/dhanajayrajput" target="_blank">🎨 behance.net/dhanajayrajput</a>
-        </div>
-      </div>
-
-      <div class="resume-section-wrapper">
-        <h3>Professional Summary</h3>
-        <p class="resume-summary-text">
-          UI/UX and Visual Designer with 4 years of experience creating user-centric products across fintech, SaaS,
-          HRMS, ERP, CRM, AI product, and government platforms. Skilled in designing AI-powered solutions, end-to-end
-          product experiences, and scalable design systems, with expertise in Figma, Adobe Creative Suite, stakeholder
-          collaboration, Agile delivery, and leading teams to transform complex workflows into intuitive digital
-          products.
-        </p>
-      </div>
-
-      <div class="resume-section-wrapper">
-        <h3>Core Skills and Tools</h3>
-        <div class="resume-skills-group">
-          <strong>Design Tools:</strong>
-          <p class="resume-summary-text">Figma, Adobe XD, Photoshop, Illustrator, InDesign, Sketch, Spline</p>
-        </div>
-        <div class="resume-skills-group">
-          <strong>AI-Integrated Product Design:</strong>
-          <p class="resume-summary-text">Conversational Agent/Chatbot UX, Broadcast Messaging Flows, AI Document &amp;
-            Resume Parsing Interfaces, Human-in-the-loop UX, AI State &amp; Confidence Indicators</p>
-        </div>
-        <div class="resume-skills-group">
-          <strong>Visual Design:</strong>
-          <p class="resume-summary-text">Typography, Color Systems, Layout Design, Design Systems, Responsive Design,
-            WCAG Accessibility, Motion Graphics, Interaction Design</p>
-        </div>
-        <div class="resume-skills-group">
-          <strong>UX Strategy:</strong>
-          <p class="resume-summary-text">User Research, Wireframing, Prototyping, User Flows, Journey Mapping, Usability
-            Testing, Information Architecture, Heuristic Evaluation</p>
-        </div>
-      </div>
-
-      <div class="resume-section-wrapper">
-        <h3>Professional Experience</h3>
-
-        <div class="resume-experience-node">
-          <div class="resume-exp-heading-row">
-            <h4>UI/UX and Visual Designer</h4>
-            <span class="date-duration-label">Dec 2025 - Present</span>
-          </div>
-          <div class="resume-exp-company-sub">High Tech Info system, Jabalpur, MP</div>
-          <ul class="resume-bullet-list">
-            <li>Spearheaded UX and interface design for a CPaaS platform, defining color systems, typography, and
-              component layouts for multi-channel workflows covering calling, messaging, and third-party integrations.
-            </li>
-            <li>Simplified conversational agent flows using consistent iconography and color-coded states, cutting user
-              confusion by 35% and raising task completion by 20%.</li>
-            <li>Delivered pixel-perfect, high-fidelity prototypes for a Telecalling Platform and AI-powered Resume
-              Parser, coordinating handoff with 5 engineers within weekly Agile sprints.</li>
-            <li>Pitched 10-plus interface concepts to senior stakeholders, refined designs through 3 rounds of feedback,
-              and upheld brand consistency across all product screens.</li>
-          </ul>
-        </div>
-
-        <div class="resume-experience-node">
-          <div class="resume-exp-heading-row">
-            <h4>UI/UX and Visual Designer</h4>
-            <span class="date-duration-label">May 2024 - Nov 2025</span>
-          </div>
-          <div class="resume-exp-company-sub">Fin Coopers Tech India Pvt. Ltd, Indore, MP</div>
-          <ul class="resume-bullet-list">
-            <li>Owned interface design for 7 enterprise products (HRMS, ERP, CRM, Finance, LMS, LOS, AI Doc), unifying
-              brand language across all B2B and B2C touch points.</li>
-            <li>Amplified UI consistency by 80% and cut design-to-development handoff time by 40% by rolling out a
-              scalable, component-based design system used across all products.</li>
-            <li>Architected Docexe Document Management Platform with responsive web and mobile layouts, applying modular
-              component systems and rigorous typography hierarchy.</li>
-            <li>Conducted competitive research and trend analysis, presenting actionable insights to leadership that
-              shaped 3 major product redesigns.</li>
-            <li>Coached 3 junior designers on color theory, typography, and design principles, raising team output
-              quality by 30% within 6 months.</li>
-          </ul>
-        </div>
-
-        <div class="resume-experience-node">
-          <div class="resume-exp-heading-row">
-            <h4>UI/UX and Visual Designer</h4>
-            <span class="date-duration-label">Mar 2023 - May 2024</span>
-          </div>
-          <div class="resume-exp-company-sub">Coder Farm Pvt. Ltd, Indore, MP</div>
-          <ul class="resume-bullet-list">
-            <li>Crafted end-to-end UI/UX and brand identity for a hiring portal, shipping 10 web and mobile products
-              with a shared component library that cut production time by 25%.</li>
-            <li>Built the Solar System Gov. platform, enabling 500-plus users to compare vendors and estimate solar
-              budgets, alongside a TEDx coordination tool serving 200 attendees.</li>
-            <li>Partnered with clients to gather requirements, facilitated design reviews, and achieved a 100% on-time
-              delivery rate across all projects.</li>
-            <li>Executed full design lifecycle across 4 cross-functional teams, from discovery and wireframing through
-              stakeholder sign-off and final production handoff.</li>
-          </ul>
-        </div>
-
-        <div class="resume-experience-node">
-          <div class="resume-exp-heading-row">
-            <h4>UI/UX Intern and Graphic Designer</h4>
-            <span class="date-duration-label">Oct 2022 - Mar 2023</span>
-          </div>
-          <div class="resume-exp-company-sub">Coder Farm Pvt. Ltd, Indore, MP</div>
-          <ul class="resume-bullet-list">
-            <li>Produced wireframes, user flows, and graphic assets for 5 sprint cycles, gaining hands-on Agile
-              experience under senior designer mentorship.</li>
-            <li>Strengthened foundations in user-centered design, critique processes, and cross-functional teamwork that
-              underpinned subsequent professional growth.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="resume-section-wrapper">
-        <h3>Key Projects</h3>
-        <div class="resume-project-node">
-          <h4>AI-Powered Resume Parser</h4>
-          <p>Designed the end-to-end experience for an AI resume-parsing tool, including intelligent field extraction
-            review, confidence/state indicators, and human-in-the-loop correction flows - reducing recruiter screening
-            time and improving parsing accuracy through clearer visual feedback.</p>
-        </div>
-        <div class="resume-project-node">
-          <h4>Conversational Agent / Chatbot UX</h4>
-          <p>Designed the end-to-end UX for a conversational AI agent builder, covering flow-creation screens,
-            intent/response mapping, and color-coded conversation states. Simplified complex chatbot logic into clear,
-            intuitive layouts, cutting user confusion by 35% and raising task completion by 20%.</p>
-        </div>
-      </div>
-
-      <div class="resume-section-wrapper">
-        <h3>Education</h3>
-        <div class="education-timeline-node">
-          <span><strong>B.Com (Computer Applications)</strong> - Lal Bahadur Shastri College, Harda, MP</span>
-          <span class="year">2021</span>
-        </div>
-        <div class="education-timeline-node">
-          <span><strong>12th Higher Secondary</strong> - Krishna Convent H.S. School, Gahal</span>
-          <span class="year">2019</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="main.js"></script>
-</body>
-
+    <!-- MAIN JAVASCRIPT ANIMATION ENGINE -->
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>

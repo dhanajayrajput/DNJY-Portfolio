@@ -1,0 +1,474 @@
+/* =========================================
+   COMIC BOOK CASE STUDY SECTION STYLES
+   ========================================= */
+:root {
+  --bg-dark: #07080b;
+  --cover-dark: #12151f;
+  --paper-comic: #181c28;
+  --comic-yellow: #facc15;
+  --comic-pink: #f43f5e;
+  --accent-cyan: #38bdf8;
+  --accent-indigo: #6366f1;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+}
+
+.comic-project-section {
+  position: relative;
+  z-index: 25;
+  background-color: var(--bg-dark);
+  background-image:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(99, 102, 241, 0.15),
+      transparent 60%
+    ),
+    radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.95), transparent 80%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  font-family: "Comic Neue", cursive, sans-serif;
+  overflow: hidden;
+}
+
+/* HEADER HUD */
+.hud-header {
+  text-align: center;
+  margin-bottom: 20px;
+  z-index: 100;
+}
+
+.hud-title {
+  font-family: "Bangers", cursive;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: 2px;
+  color: var(--comic-yellow);
+  text-shadow:
+    3px 3px 0px #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000;
+}
+
+.hud-hint {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: rgba(18, 21, 31, 0.9);
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--accent-cyan);
+  display: inline-block;
+  margin-top: 5px;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+/* 3D BOOK STAGE & DYNAMIC CENTERING */
+.book-stage {
+  perspective: 2500px;
+  width: 100%;
+  max-width: 900px;
+  height: 580px;
+  position: relative;
+}
+
+/* Shadow beneath the book */
+.book-stage::after {
+  content: "";
+  position: absolute;
+  bottom: -30px;
+  left: 5%;
+  width: 90%;
+  height: 40px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.95) 0%,
+    transparent 75%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.book-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translateX(-25%);
+  transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.book-container.open {
+  transform: translateX(0%);
+}
+
+/* CENTER SPINE */
+.book-spine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #000 0%, #222 50%, #000 100%);
+  z-index: 50;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* INDIVIDUAL 3D FLIPPING PAGES */
+.page {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  cursor: pointer;
+}
+
+.page-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background-color: var(--paper-comic);
+  border: 3px solid #000;
+  border-radius: 0 12px 12px 0;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: inset -10px 0 30px rgba(0, 0, 0, 0.6);
+}
+
+.page-back {
+  transform: rotateY(180deg);
+  border-radius: 12px 0 0 12px;
+  box-shadow: inset 10px 0 30px rgba(0, 0, 0, 0.6);
+}
+
+/* FLIPPED STATE */
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+/* STRICT 3D DEPTH STACKING */
+/* Increased translateZ spacing (3px gaps) prevents 3D clipping (Z-fighting). 
+   Extended to 5 pages to ensure new pages stack properly. */
+
+.page:nth-of-type(1) {
+  z-index: 5;
+  transform: translateZ(15px) rotateY(0deg);
+}
+.page:nth-of-type(2) {
+  z-index: 4;
+  transform: translateZ(12px) rotateY(0deg);
+}
+.page:nth-of-type(3) {
+  z-index: 3;
+  transform: translateZ(9px) rotateY(0deg);
+}
+.page:nth-of-type(4) {
+  z-index: 2;
+  transform: translateZ(6px) rotateY(0deg);
+}
+.page:nth-of-type(5) {
+  z-index: 1;
+  transform: translateZ(3px) rotateY(0deg);
+}
+
+/* Flipped State Stacking */
+/* Note: translateZ remains exactly the same! When rotated -180deg, 
+   the Z-axis naturally pushes the lower pages to the back of the left pile. */
+.page.flipped:nth-of-type(1) {
+  z-index: 1;
+  transform: translateZ(15px) rotateY(-180deg);
+}
+.page.flipped:nth-of-type(2) {
+  z-index: 2;
+  transform: translateZ(12px) rotateY(-180deg);
+}
+.page.flipped:nth-of-type(3) {
+  z-index: 3;
+  transform: translateZ(9px) rotateY(-180deg);
+}
+.page.flipped:nth-of-type(4) {
+  z-index: 4;
+  transform: translateZ(6px) rotateY(-180deg);
+}
+.page.flipped:nth-of-type(5) {
+  z-index: 5;
+  transform: translateZ(3px) rotateY(-180deg);
+}
+
+/* FRONT & BACK COVER STYLING */
+.cover-style {
+  background-color: var(--cover-dark) !important;
+  background-image:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(250, 204, 21, 0.1),
+      transparent 70%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.3) 0px,
+      rgba(0, 0, 0, 0.3) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  border: 4px solid var(--comic-yellow) !important;
+  box-shadow:
+    inset 0 0 50px rgba(0, 0, 0, 0.95),
+    0 20px 40px rgba(0, 0, 0, 0.9) !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.cover-badge {
+  font-family: "Bangers", cursive;
+  background: var(--comic-pink);
+  color: #fff;
+  padding: 6px 18px;
+  font-size: 1.1rem;
+  transform: rotate(-3deg);
+  display: inline-block;
+  box-shadow: 3px 3px 0 #000;
+  border: 2px solid #000;
+  margin-bottom: 15px;
+}
+
+.cover-title {
+  font-family: "Bangers", cursive;
+  font-size: 3.2rem;
+  line-height: 0.95;
+  color: var(--comic-yellow);
+  text-shadow:
+    4px 4px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.cover-author {
+  font-family: "Oswald", sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-main);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.gesture-prompt {
+  margin-top: 25px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  animation: pulsePrompt 1.5s infinite alternate;
+}
+
+@keyframes pulsePrompt {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* SCROLLABLE MULTI-IMAGE GALLERY PANEL */
+.comic-panel-scrollable {
+  background: #111420;
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 4px 4px 0 #000;
+  margin-bottom: 10px;
+  max-height: 330px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comic-panel-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+.comic-panel-scrollable::-webkit-scrollbar-track {
+  background: #0a0c14;
+  border-radius: 4px;
+}
+.comic-panel-scrollable::-webkit-scrollbar-thumb {
+  background: var(--comic-yellow);
+  border-radius: 4px;
+}
+
+.panel-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 2px solid #000;
+  flex-shrink: 0;
+}
+
+.img-caption {
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: -6px;
+  margin-bottom: 4px;
+}
+
+.speech-bubble {
+  position: relative;
+  background: #ffffff;
+  color: #000000;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0 #000;
+  margin-bottom: 10px;
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 20px;
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: #ffffff transparent;
+  display: block;
+  width: 0;
+}
+
+.action-caption {
+  background: var(--comic-yellow);
+  color: #000000;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border: 2px solid #000;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 2px 2px 0 #000;
+  margin-bottom: 8px;
+}
+
+.comic-title {
+  font-family: "Bangers", cursive;
+  font-size: 1.5rem;
+  color: #ffffff;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.comic-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* GREETING PAGE STYLING */
+.greeting-box {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.greeting-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--comic-yellow);
+  box-shadow: 3px 3px 0 #000;
+  object-fit: cover;
+}
+
+.page-num {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: right;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-top: 6px;
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  z-index: 100;
+}
+
+.btn {
+  background: var(--paper-comic);
+  border: 2px solid #000;
+  color: var(--text-main);
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 #000;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  background: var(--accent-indigo);
+}
+
+.reset-btn-badge {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 900px) {
+  .book-stage {
+    height: 480px;
+  }
+  .comic-panel-scrollable {
+    max-height: 240px;
+  }
+  .panel-img {
+    height: 130px;
+  }
+  .cover-title {
+    font-size: 2.3rem;
+  }
+  .page-face {
+    padding: 16px;
+  }
+}
