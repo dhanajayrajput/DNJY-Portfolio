@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dhananjay Sagar - 3D Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@500;700&family=Playball&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           GLOBAL SETUP & UNIVERSAL DARK THEME
+           ========================================= */
+        :root {
+            --bg-dark: #0B0C10;
+            --bg-surface: #151821;
+            --border-color: #262A36;
+            --text-primary: #F8FAFC;
+            --text-secondary: #E2E8F0;
+            --text-muted: #94A3B8;
+            --accent-indigo: #6366F1;
+            --accent-sky: #38BDF8;
+            --card-thickness: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-dark); 
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 30%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08), transparent 30%);
+            color: var(--text-primary); 
+            overflow-x: hidden; 
+        }
+
+        .main-header {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: fixed;
+            top: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent-sky), var(--accent-indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 10;
+            pointer-events: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* =========================================
+           SECTION 1: 3D PORTFOLIO CAROUSEL (100vh)
+           ========================================= */
+        .portfolio-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 clamp(20px, 8vw, 120px);
+        }
+
+        /* EXPERIENCE STEPPER (LEFT SIDEBAR) */
+        .stepper-container {
+            position: absolute;
+            left: clamp(20px, 8vw, 120px);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            z-index: 20;
+            border-left: 2px solid var(--border-color);
+            padding-left: 25px;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .stepper-container.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-50%) translateX(-20px);
+        }
+
+        .step {
+            position: relative;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .step:hover, .step.active {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .step-dot {
+            position: absolute;
+            left: -32px; 
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 0.4s ease;
+        }
+
+        .step-1:hover .step-dot, .step-1.active .step-dot { background: var(--accent-indigo); box-shadow: 0 0 15px var(--accent-indigo); }
+        .step-2:hover .step-dot, .step-2.active .step-dot { background: var(--accent-sky); box-shadow: 0 0 15px var(--accent-sky); }
+        .step-3:hover .step-dot, .step-3.active .step-dot { background: #818cf8; box-shadow: 0 0 15px #818cf8; }
+        .step-4:hover .step-dot, .step-4.active .step-dot { background: #38bdf8; box-shadow: 0 0 15px #38bdf8; }
+        .step-5:hover .step-dot, .step-5.active .step-dot { background: #4ade80; box-shadow: 0 0 15px #4ade80; }
+
+        .step-title { font-family: 'Oswald', sans-serif; font-size: clamp(0.9rem, 1.2vw, 1.1rem); color: var(--text-primary); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+        .step-desc { font-family: 'Inter', sans-serif; font-size: clamp(0.75rem, 1vw, 0.85rem); color: var(--text-muted); font-weight: 500; }
+
+        /* UI CONTROLLER (BOTTOM TABS) */
+        .controller-panel {
+            position: absolute;
+            bottom: 5%;
+            display: flex;
+            gap: 15px;
+            background: rgba(21, 24, 33, 0.7);
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            backdrop-filter: blur(16px);
+            z-index: 20;
+        }
+
+        .control-btn {
+            background: transparent; border: none; color: var(--text-muted); font-family: 'Inter', sans-serif;
+            font-size: clamp(0.8rem, 1.2vw, 1rem); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+            padding: 10px 20px; border-radius: 30px; cursor: pointer; transition: all 0.3s ease;
+        }
+
+        .control-btn:hover { color: var(--text-primary); }
+        .control-btn.active { 
+            background: linear-gradient(135deg, var(--accent-sky), var(--accent-indigo)); 
+            color: #ffffff; 
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); 
+        }
+
+        /* 3D CIRCULAR CAROUSEL SCENE */
+        .scene {
+            perspective: 2500px; width: 100%; height: 60vh;
+            display: flex; justify-content: center; align-items: center;
+            transform: translateX(5%); transition: transform 0.5s ease;
+        }
+        .scene.centered { transform: translateX(0%); }
+        .carousel { width: clamp(200px, 20vw, 260px); height: clamp(300px, 30vw, 380px); position: relative; transform-style: preserve-3d; }
+
+        /* 3D SLABS */
+        .card-wrapper {
+            position: absolute; width: 100%; height: 100%; left: 0; top: 0;
+            transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s ease;
+            cursor: pointer; opacity: 0; pointer-events: none;
+            transform: rotateY(0deg) translateZ(0px) scale(0);
+        }
+        .card-wrapper.active-card { opacity: 1; pointer-events: auto; }
+        .card-inner {
+            position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.3, 0.2, 0.2, 1);
+        }
+        .card-inner::before, .card-inner::after {
+            content: ''; position: absolute; width: var(--card-thickness);
+            height: calc(100% - 40px); top: 20px; background: #0b0c10;
+            border: 1px solid var(--border-color);
+        }
+        .card-inner::before { left: 0; transform: rotateY(-90deg); transform-origin: left center; }
+        .card-inner::after { right: 0; transform: rotateY(90deg); transform-origin: right center; }
+        .card-wrapper.active-card:hover .card-inner {
+            transform: translateZ(100px) scale(1.05) rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute; width: 100%; height: 100%; border-radius: 20px;
+            backface-visibility: hidden; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; overflow: hidden;
+            padding: clamp(15px, 2vw, 25px); text-align: center; background-color: var(--bg-surface);
+            border: 1px solid var(--border-color); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.6);
+        }
+        .card-front { transform: translateZ(calc(var(--card-thickness) / 2)); }
+        .card-back { transform: rotateY(180deg) translateZ(calc(var(--card-thickness) / 2)); }
+
+        .color-1 { --neon: var(--accent-indigo); } .color-2 { --neon: var(--accent-sky); } 
+        .color-3 { --neon: #818cf8; } .color-4 { --neon: #38bdf8; } 
+        .color-5 { --neon: #4ade80; } .color-6 { --neon: #818cf8; } 
+        .color-7 { --neon: #f43f5e; } .color-8 { --neon: #a3e635; } 
+
+        .card-front::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 0%, var(--neon), transparent 60%);
+            opacity: 0.15; z-index: 0;
+        }
+        .card-wrapper:hover .card-back {
+            border-color: var(--neon); box-shadow: 0 0 30px rgba(99, 102, 241, 0.3), inset 0 0 15px var(--neon);
+        }
+
+        .card-title { font-family: 'Playball', cursive; font-size: clamp(1.6rem, 2.2vw, 2.2rem); color: var(--text-primary); text-shadow: 0 2px 10px rgba(0,0,0,0.8); z-index: 2; line-height: 1.1; }
+        .profile-card .card-title { font-size: clamp(1.8rem, 2.5vw, 2.5rem); }
+        .card-subtitle { font-family: 'Inter', sans-serif; font-size: clamp(0.7rem, 1vw, 0.8rem); text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; font-weight: 600; color: var(--neon); z-index: 2; }
+        .card-desc { font-family: 'Inter', sans-serif; font-size: clamp(0.8rem, 1vw, 0.95rem); color: var(--text-muted); line-height: 1.5; font-weight: 300; }
+        .desc-title { font-family: 'Oswald', sans-serif; font-size: clamp(1.1rem, 1.4vw, 1.4rem); color: var(--neon); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* =========================================
+           SECTION 2: 3D CASE STUDY PRESENTATION 
+           ========================================= */
+        .case-study-section {
+            position: relative;
+            width: 100vw;
+            min-height: 100vh;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px clamp(20px, 8vw, 120px);
+            perspective: 2000px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .case-study-header {
+            text-align: center;
+            margin-bottom: clamp(30px, 5vw, 50px);
+        }
+        .case-study-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            background: linear-gradient(135deg, var(--text-primary), var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .case-study-header p {
+            color: var(--text-muted);
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+        }
+
+        .case-study-frame {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: clamp(10px, 2vw, 20px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .case-study-frame img {
+            width: 100%;
+            height: auto;
+            border-radius: 14px;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateZ(30px);
+        }
+
+        /* =========================================
+           RESPONSIVE BREAKPOINTS (MOBILE & TABLET)
+           ========================================= */
+        @media (max-width: 900px) {
+            .scene { transform: translateX(0%); }
+            .stepper-container {
+                left: 50%;
+                top: 12%;
+                transform: translateX(-50%);
+                flex-direction: row;
+                border-left: none;
+                border-bottom: 2px solid var(--border-color);
+                padding-left: 0;
+                padding-bottom: 15px;
+                gap: 15px;
+                width: 90%;
+                justify-content: center;
+            }
+            .step-dot {
+                top: -18px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .step-desc { display: none; } /* Hide subtext on mobile for clean header layout */
+            .stepper-container.hidden {
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2 class="main-header" id="pageTitle">Experience</h2>
+
+    <!-- SECTION 1: 3D PORTFOLIO CAROUSEL -->
+    <div class="portfolio-section" id="portfolioSection">
+        <!-- LEFT SIDEBAR STEPPER -->
+        <div class="stepper-container" id="stepper">
+            <div class="step step-1" onclick="goToStep(0)">
+                <div class="step-dot"></div>
+                <div class="step-title">Profile</div>
+                <div class="step-desc">3.11 Yrs Exp</div>
+            </div>
+            <div class="step step-2" onclick="goToStep(1)">
+                <div class="step-dot"></div>
+                <div class="step-title">High Tech</div>
+                <div class="step-desc">8 Months</div>
+            </div>
+            <div class="step step-3" onclick="goToStep(2)">
+                <div class="step-dot"></div>
+                <div class="step-title">Fin Coopers</div>
+                <div class="step-desc">1 Yr 7 Mos</div>
+            </div>
+            <div class="step step-4" onclick="goToStep(3)">
+                <div class="step-dot"></div>
+                <div class="step-title">Coder Farm</div>
+                <div class="step-desc">1 Yr 3 Mos</div>
+            </div>
+            <div class="step step-5" onclick="goToStep(4)">
+                <div class="step-dot"></div>
+                <div class="step-title">Internship</div>
+                <div class="step-desc">6 Months</div>
+            </div>
+        </div>
+
+        <div class="scene" id="mainScene">
+            <div class="carousel" id="carousel">
+                <!-- EXPERIENCE CARDS -->
+                <div class="card-wrapper color-1 profile-card" data-category="exp">
+                    <div class="card-inner">
+                        <div class="card-front"><div class="card-title">Dhananjay Sagar</div><div class="card-subtitle">Product Designer</div></div>
+                        <div class="card-back"><div class="desc-title">3.11 Yrs Exp</div><p class="card-desc"><strong>Pune, India</strong><br><br>Figma • Spline • UX Research • Design Systems</p></div>
+                    </div>
+                </div>
+
+                <div class="card-wrapper color-2" data-category="exp">
+                    <div class="card-inner">
+                        <div class="card-front"><div class="card-title">UI/UX & Visual</div><div class="card-subtitle">High Tech Info System</div></div>
+                        <div class="card-back"><div class="desc-title">8 Months</div><p class="card-desc"><strong>Dec 2025 - Present</strong><br><br>Jabalpur, MP</p></div>
+                    </div>
+                </div>
+
+                <div class="card-wrapper color-3" data-category="exp">
+                    <div class="card-inner">
+                        <div class="card-front"><div class="card-title">UI/UX & Visual</div><div class="card-subtitle">Fin Coopers Tech</div></div>
+                        <div class="card-back"><div class="desc-title">1 Yr 7 Mos</div><p class="card-desc"><strong>May 2024 - Nov 2025</strong><br><br>Indore, MP</p></div>
+                    </div>
+                </div>
+
+                <div class="card-wrapper color-4" data-category="exp">
+                    <div class="card-inner">
+                        <div class="card-front"><div class="card-title">UI/UX & Visual</div><div class="card-subtitle">Coder Farm Pvt. Ltd</div></div>
+                        <div class="card-back"><div class="desc-title">1 Yr 3 Mos</div><p class="card-desc"><strong>Mar 2023 - May 2024</strong><br><br>Indore, MP</p></div>
+                    </div>
+                </div>
+
+                <div class="card-wrapper color-5" data-category="exp">
+                    <div class="card-inner">
+                        <div class="card-front"><div class="card-title">UI/UX Intern</div><div class="card-subtitle">Coder Farm Pvt. Ltd</div></div>
+                        <div class="card-back"><div class="desc-title">6 Months</div><p class="card-desc"><strong>Oct 2022 - Mar 2023</strong><br><br>Indore, MP</p></div>
+                    </div>
+                </div>
+
+                <!-- SKILLS CARDS -->
+                <div class="card-wrapper color-6" data-category="skills"><div class="card-inner"><div class="card-front"><div class="card-title">UI/UX Design</div><div class="card-subtitle">Visuals</div></div><div class="card-back"><div class="desc-title">UI/UX Design</div><p class="card-desc">Crafting beautiful, intuitive interfaces.</p></div></div></div>
+                <div class="card-wrapper color-7" data-category="skills"><div class="card-inner"><div class="card-front"><div class="card-title">UX Research</div><div class="card-subtitle">Insights</div></div><div class="card-back"><div class="desc-title">UX Research</div><p class="card-desc">Driving data-informed design decisions.</p></div></div></div>
+                <div class="card-wrapper color-8" data-category="skills"><div class="card-inner"><div class="card-front"><div class="card-title">Interaction</div><div class="card-subtitle">Motion</div></div><div class="card-back"><div class="desc-title">Interaction</div><p class="card-desc">Micro-interactions and motion graphics.</p></div></div></div>
+                <div class="card-wrapper color-1" data-category="skills"><div class="card-inner"><div class="card-front"><div class="card-title">Product<br>Strategy</div><div class="card-subtitle">Vision</div></div><div class="card-back"><div class="desc-title">Strategy</div><p class="card-desc">Aligning design with business objectives.</p></div></div></div>
+                <div class="card-wrapper color-2" data-category="skills"><div class="card-inner"><div class="card-front"><div class="card-title">Design<br>Systems</div><div class="card-subtitle">Consistency</div></div><div class="card-back"><div class="desc-title">Systems</div><p class="card-desc">Robust component libraries and scaling.</p></div></div></div>
+                <div class="card-wrapper color-3" data-category="skills"><div class="card-inner"><div class="card-front"><div class="card-title">Prototyping</div><div class="card-subtitle">Validation</div></div><div class="card-back"><div class="desc-title">Prototyping</div><p class="card-desc">High-fidelity interactive models.</p></div></div></div>
+                <div class="card-wrapper color-4" data-category="skills"><div class="card-inner"><div class="card-front"><div class="card-title">Wireframing</div><div class="card-subtitle">Structure</div></div><div class="card-back"><div class="desc-title">Wireframing</div><p class="card-desc">Mapping out skeletal frameworks.</p></div></div></div>
+                <div class="card-wrapper color-5" data-category="skills"><div class="card-inner"><div class="card-front"><div class="card-title">Accessibility</div><div class="card-subtitle">Inclusion</div></div><div class="card-back"><div class="desc-title">Accessibility</div><p class="card-desc">Following strict WCAG guidelines.</p></div></div></div>
+            </div>
+        </div>
+
+        <!-- BOTTOM UI CONTROLLER -->
+        <div class="controller-panel">
+            <button class="control-btn" onclick="switchCategory('exp', 'Experience', this)">Experience</button>
+            <button class="control-btn" onclick="switchCategory('skills', 'Skills & Expertise', this)">Skills</button>
+        </div>
+    </div>
+
+    <!-- SECTION 2: 3D CASE STUDY PRESENTATION -->
+    <section class="case-study-section" id="caseStudySection">
+        <div class="case-study-header">
+            <h2>Featured Case Study</h2>
+            <p>Transforming Mental Wellness Experience (YOGINI App)</p>
+        </div>
+
+        <div class="case-study-frame" id="caseStudyFrame">
+            <img src="image_98109c.jpg" alt="YOGINI Case Study Presentation">
+        </div>
+    </section>
+
+    <!-- SCRIPTS -->
+    <script>
+        const allCards = document.querySelectorAll('.card-wrapper');
+        const buttons = document.querySelectorAll('.control-btn');
+        const steps = document.querySelectorAll('.step');
+        const pageTitle = document.getElementById('pageTitle');
+        const stepper = document.getElementById('stepper');
+        const mainScene = document.getElementById('mainScene');
+        const carousel = document.getElementById('carousel');
+
+        let currentAngle = 0;
+        let targetAngle = 0;
+        let currentStepIndex = 0;
+        let isAutoSpinning = false;
+        let activeCategory = 'exp';
+        let isScrollThrottled = false;
+
+        function animateCarousel() {
+            if (isAutoSpinning) {
+                targetAngle -= 0.15; 
+            }
+            currentAngle += (targetAngle - currentAngle) * 0.05;
+            carousel.style.transform = `rotateY(${currentAngle}deg)`;
+            requestAnimationFrame(animateCarousel);
+        }
+        animateCarousel();
+
+        window.goToStep = function(index) {
+            isAutoSpinning = false;
+            currentStepIndex = index;
+            const visibleCards = Array.from(allCards).filter(c => c.dataset.category === activeCategory);
+            const numCards = visibleCards.length;
+            
+            const cardAngle = (360 / numCards) * index;
+            let target = -cardAngle;
+
+            let diff = (target - targetAngle) % 360;
+            if (diff > 180) diff -= 360;
+            if (diff < -180) diff += 360;
+            targetAngle += diff;
+
+            if (activeCategory === 'exp') {
+                steps.forEach((step, i) => {
+                    if (i === index) step.classList.add('active');
+                    else step.classList.remove('active');
+                });
+            }
+        };
+
+        window.switchCategory = function(category, titleText, clickedBtn = null) {
+            activeCategory = category;
+            pageTitle.innerText = titleText;
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (clickedBtn) {
+                clickedBtn.classList.add('active');
+            } else {
+                const activeBtn = Array.from(buttons).find(btn => btn.innerText.toLowerCase().includes(category === 'exp' ? 'experience' : 'skills'));
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+
+            const visibleCards = Array.from(allCards).filter(c => c.dataset.category === category);
+            const hiddenCards = Array.from(allCards).filter(c => c.dataset.category !== category);
+            const numCards = visibleCards.length;
+            
+            // Responsive Carousel Radius based on viewport
+            const screenWidth = window.innerWidth;
+            let radius = numCards <= 5 ? 320 : 380;
+            if (screenWidth < 600) {
+                radius = numCards <= 5 ? 200 : 250;
+            } else if (screenWidth < 900) {
+                radius = numCards <= 5 ? 260 : 310;
+            }
+
+            if (category === 'exp') {
+                stepper.classList.remove('hidden');
+                if (screenWidth > 900) mainScene.classList.remove('centered');
+                goToStep(0); 
+            } else {
+                stepper.classList.add('hidden');
+                mainScene.classList.add('centered');
+                isAutoSpinning = true; 
+            }
+
+            hiddenCards.forEach(card => {
+                card.classList.remove('active-card');
+                card.style.transform = `rotateY(0deg) translateZ(0px) scale(0)`;
+            });
+
+            setTimeout(() => {
+                visibleCards.forEach((card, index) => {
+                    card.classList.add('active-card');
+                    const angle = (360 / numCards) * index;
+                    card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px) scale(1)`;
+                });
+            }, 100); 
+        };
+
+        // Scroll Wheel / Touch drives circular rotation
+        window.addEventListener('wheel', (e) => {
+            if (window.scrollY > 50) return;
+
+            const visibleCards = Array.from(allCards).filter(c => c.dataset.category === activeCategory);
+            const numCards = visibleCards.length;
+
+            if (isScrollThrottled) {
+                e.preventDefault();
+                return;
+            }
+
+            if (e.deltaY > 0) {
+                if (currentStepIndex < numCards - 1) {
+                    e.preventDefault();
+                    currentStepIndex++;
+                    goToStep(currentStepIndex);
+                    throttleScroll();
+                }
+            } else if (e.deltaY < 0) {
+                if (currentStepIndex > 0) {
+                    e.preventDefault();
+                    currentStepIndex--;
+                    goToStep(currentStepIndex);
+                    throttleScroll();
+                }
+            }
+        }, { passive: false });
+
+        function throttleScroll() {
+            isScrollThrottled = true;
+            setTimeout(() => { isScrollThrottled = false; }, 400);
+        }
+
+        // 3D Tilt Effect for Case Study
+        const csSection = document.getElementById('caseStudySection');
+        const csFrame = document.getElementById('caseStudyFrame');
+
+        csSection.addEventListener('mousemove', (e) => {
+            const rect = csSection.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const rotX = (y / (rect.height / 2)) * -8;
+            const rotY = (x / (rect.width / 2)) * 8;
+
+            csFrame.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+        });
+
+        csSection.addEventListener('mouseleave', () => {
+            csFrame.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+            csFrame.style.transition = 'transform 0.5s ease';
+        });
+
+        csSection.addEventListener('mouseenter', () => {
+            csFrame.style.transition = 'none';
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            switchCategory('exp', 'Experience');
+        });
+    </script>
+</body>
+</html>

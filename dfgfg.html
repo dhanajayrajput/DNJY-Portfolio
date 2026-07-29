@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Case Study Image Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           GLOBAL DARK THEME SETUP
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505; 
+            background-image: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%);
+            color: #f1f1f1; 
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 3D PERSPECTIVE WRAPPER */
+        .presentation-container {
+            perspective: 2000px;
+            width: 90vw;
+            max-width: 1400px;
+            height: 80vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 50px;
+        }
+
+        /* =========================================
+           LEFT COLUMN: TEXT & CARDS (FROM IMAGE)
+           ========================================= */
+        .content-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 1.15;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+        }
+
+        .main-title span {
+            color: #ff7b00; 
+            font-style: italic;
+        }
+
+        .main-desc {
+            font-size: 1.05rem;
+            color: #a0a0a0;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* 3 FEATURE CARDS */
+        .cards-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: rgba(25, 25, 25, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            flex: 1;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 123, 0, 0.4);
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .card-text {
+            font-size: 0.8rem;
+            color: #888;
+            line-height: 1.4;
+        }
+
+        /* =========================================
+           RIGHT COLUMN: 3D FLOATING IMAGE LAYER
+           ========================================= */
+        .image-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        .image-3d-card {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            background: #111;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 50px rgba(255, 123, 0, 0.12);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out; /* Smooth follow for mouse movement */
+        }
+
+        /* Your raw image representation with layered 3D depth */
+        .case-study-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 22px;
+            transform: translateZ(30px); /* Pops the image forward in 3D space */
+            filter: brightness(0.98);
+        }
+
+        /* Dynamic lighting/glare layer that shifts with mouse movement */
+        .lighting-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 70%);
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            transform: translateZ(50px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container" id="container">
+        
+        <!-- Left Side: Content & Feature Cards -->
+        <div class="content-left">
+            <h1 class="main-title">
+                Transforming Mental Wellness Into A <span>Personalized Experience.</span>
+            </h1>
+            <p class="main-desc">
+                YOGINI is an AI-powered mobile ecosystem that turns mood, sleep, habits and journals into a single, human view of emotional wellness.
+            </p>
+
+            <div class="cards-row">
+                <div class="feature-card">
+                    <div class="card-icon">🤖</div>
+                    <div class="card-title">AI Companion</div>
+                    <div class="card-text">Your 24/7 guide for mind & habits</div>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon">❤️</div>
+                    <div class="card-title">Mood Tracking</div>
+                    <div class="card-text">Understand your emotions deeply</div>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-title">Personalized</div>
+                    <div class="card-text">Routines curated just for you</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: 3D Animated Image Container -->
+        <div class="image-wrapper">
+            <div class="image-3d-card" id="imageCard">
+                <!-- Drop your raw image directly here -->
+                <img src="image_98109c.jpg" alt="Case Study Presentation" class="case-study-img">
+                <div class="lighting-layer" id="lightingLayer"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const imageCard = document.getElementById('imageCard');
+        const lightingLayer = document.getElementById('lightingLayer');
+
+        // Advanced 3D Parallax & Tilt Effect for the Image
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            // Calculate rotation angles
+            const rotateX = (-y / (rect.height / 2)) * 14; 
+            const rotateY = (x / (rect.width / 2)) * 14;
+
+            imageCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+
+            // Move lighting highlight based on mouse position
+            const moveX = (e.clientX - rect.left) / rect.width * 100;
+            const moveY = (e.clientY - rect.top) / rect.height * 100;
+            lightingLayer.style.background = `radial-gradient(circle at ${moveX}% ${moveY}%, rgba(255,255,255,0.25) 0%, transparent 60%)`;
+        });
+
+        // Reset position smoothly when mouse leaves
+        container.addEventListener('mouseleave', () => {
+            imageCard.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            imageCard.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.25, 1)';
+            lightingLayer.style.background = `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 70%)`;
+        });
+
+        imageCard.addEventListener('mouseenter', () => {
+            imageCard.style.transition = 'none';
+        });
+    </script>
+</body>
+</html>

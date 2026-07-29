@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll-Driven Circle Reveal (10 Images)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0d0f12;
+            color: #ffffff;
+            /* Container height drives scroll length */
+            height: 1000vh; 
+        }
+
+        /* Fixed viewport frame */
+        .viewport-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Background Base Image (Image 1) */
+        .base-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* Masked Container for Revealing Image */
+        .reveal-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            /* Initial small circle centered */
+            clip-path: circle(0% at 50% 50%);
+            will-change: clip-path;
+        }
+
+        .reveal-layer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* HUD Info Overlay */
+        .hud-overlay {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 14px 28px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .hud-overlay h3 {
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #4facfe;
+        }
+
+        .hud-overlay p {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="viewport-wrapper">
+        <!-- Persistent Base Background -->
+        <img id="baseImg" class="base-image" src="https://picsum.photos/1920/1080?random=1" alt="Base Frame">
+
+        <!-- Dynamic Circular Revealer -->
+        <div id="revealLayer" class="reveal-layer">
+            <img id="revealImg" src="https://picsum.photos/1920/1080?random=2" alt="Revealed Frame">
+        </div>
+
+        <!-- On-Screen Guidance -->
+        <div class="hud-overlay">
+            <h3 id="imageCounter">Image 1 of 10</h3>
+            <p>Scroll down to reveal • Scroll up to shrink</p>
+        </div>
+    </div>
+
+    <script>
+        // Array of 10 full-screen image URLs
+        const images = [
+            'https://picsum.photos/1920/1080?random=1',
+            'https://picsum.photos/1920/1080?random=2',
+            'https://picsum.photos/1920/1080?random=3',
+            'https://picsum.photos/1920/1080?random=4',
+            'https://picsum.photos/1920/1080?random=5',
+            'https://picsum.photos/1920/1080?random=6',
+            'https://picsum.photos/1920/1080?random=7',
+            'https://picsum.photos/1920/1080?random=8',
+            'https://picsum.photos/1920/1080?random=9',
+            'https://picsum.photos/1920/1080?random=10'
+        ];
+
+        const baseImg = document.getElementById('baseImg');
+        const revealLayer = document.getElementById('revealLayer');
+        const revealImg = document.getElementById('revealImg');
+        const imageCounter = document.getElementById('imageCounter');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            
+            // Normalize scroll progress between 0 and 1
+            const totalProgress = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
+            
+            // Map scroll progress across the 9 image transitions
+            const segmentCount = images.length - 1; 
+            const scaledProgress = totalProgress * segmentCount;
+            
+            // Determine active index pair
+            let currentIndex = Math.floor(scaledProgress);
+            if (currentIndex >= segmentCount) currentIndex = segmentCount - 1;
+
+            // Calculate percentage (0% to 100%) inside the current segment
+            const segmentProgress = scaledProgress - currentIndex;
+
+            // Update Image Sources dynamically
+            baseImg.src = images[currentIndex];
+            revealImg.src = images[currentIndex + 1];
+
+            // Scale circle radius from 0% to 150% (covering the full viewport)
+            const circleRadius = segmentProgress * 150;
+            revealLayer.style.clipPath = `circle(${circleRadius}% at 50% 50%)`;
+
+            // Update Counter Text
+            imageCounter.innerText = `Image ${currentIndex + 1} of 10`;
+        });
+    </script>
+
+</body>
+</html>
