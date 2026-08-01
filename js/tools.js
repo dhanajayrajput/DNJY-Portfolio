@@ -3,22 +3,30 @@ import { RoundedBoxGeometry } from "https://cdn.skypack.dev/three@0.136.0/exampl
 import * as CANNON from "https://cdn.skypack.dev/cannon-es";
 
 const container = document.getElementById("canvas-container");
+const narrowQuery = window.matchMedia("(max-width: 900px)");
+const phoneQuery = window.matchMedia("(max-width: 600px)");
 
 function getSize() {
   return {
-    width: container.clientWidth || window.innerWidth,
-    height: container.clientHeight || window.innerHeight,
+    width: Math.max(1, container.clientWidth || window.innerWidth),
+    height: Math.max(1, container.clientHeight || window.innerHeight),
   };
+}
+
+function getCameraZ() {
+  if (phoneQuery.matches) return 78;
+  if (narrowQuery.matches) return 68;
+  return 55;
 }
 
 /* --- Scene --- */
 const scene = new THREE.Scene();
 const { width: initW, height: initH } = getSize();
 const camera = new THREE.PerspectiveCamera(45, initW / initH, 0.1, 200);
-camera.position.set(0, 0, 55);
+camera.position.set(0, 0, getCameraZ());
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(initW, initH);
+renderer.setSize(initW, initH, false);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -29,12 +37,20 @@ container.appendChild(renderer.domElement);
 function resizeRenderer() {
   const { width, height } = getSize();
   camera.aspect = width / height;
+  camera.position.z = getCameraZ();
   camera.updateProjectionMatrix();
-  renderer.setSize(width, height);
+  renderer.setSize(width, height, false);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 }
 
 window.addEventListener("resize", resizeRenderer);
+narrowQuery.addEventListener("change", resizeRenderer);
+phoneQuery.addEventListener("change", resizeRenderer);
+
+if (typeof ResizeObserver !== "undefined") {
+  const ro = new ResizeObserver(() => resizeRenderer());
+  ro.observe(container);
+}
 
 /* --- Physics --- */
 const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -60, 0) });
@@ -161,6 +177,7 @@ const brands = [
 /* --- Cubes --- */
 const meshes = [];
 const bodies = [];
+const lastBumpAt = [];
 
 const cubeSize = 8.5;
 const hdGeo = new RoundedBoxGeometry(cubeSize, cubeSize, cubeSize, 8, 1.2);
@@ -183,6 +200,7 @@ function spawnCube(brand) {
   mesh.receiveShadow = true;
   scene.add(mesh);
   meshes.push(mesh);
+  lastBumpAt.push(0);
 
   const body = new CANNON.Body({ mass: 2, shape: physicsShape, material: defaultMaterial });
   body.position.set((Math.random() - 0.5) * 16, 25, (Math.random() - 0.5) * 6);
@@ -196,37 +214,62 @@ brands.forEach((brand, index) => {
   setTimeout(() => spawnCube(brand), index * 400);
 });
 
-/* --- Hover interaction --- */
+/* --- Pointer / touch interaction --- */
 const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
+const pointer = new THREE.Vector2();
+const BUMP_COOLDOWN_MS = 220;
 
-container.addEventListener("mousemove", (event) => {
+function bumpFromClient(clientX, clientY) {
   const rect = container.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+  if (rect.width <= 0 || rect.height <= 0) return;
 
-  mouse.x = (x / rect.width) * 2 - 1;
-  mouse.y = -(y / rect.height) * 2 + 1;
+  const x = clientX - rect.left;
+  const y = clientY - rect.top;
 
-  raycaster.setFromCamera(mouse, camera);
+  pointer.x = (x / rect.width) * 2 - 1;
+  pointer.y = -(y / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(meshes);
+  if (!intersects.length) return;
 
-  if (intersects.length > 0) {
-    const hitMesh = intersects[0].object;
-    const index = meshes.indexOf(hitMesh);
-    const hitBody = bodies[index];
+  const hitMesh = intersects[0].object;
+  const index = meshes.indexOf(hitMesh);
+  if (index < 0) return;
 
-    if (hitBody.velocity.y < 10) {
-      const bumpForce = new CANNON.Vec3(
-        (Math.random() - 0.5) * 180,
-        160 + Math.random() * 80,
-        (Math.random() - 0.5) * 180
-      );
-      const offset = new CANNON.Vec3(2.5, 2.5, 2.5);
-      hitBody.applyImpulse(bumpForce, hitBody.position.vadd(offset));
-    }
+  const now = performance.now();
+  if (now - lastBumpAt[index] < BUMP_COOLDOWN_MS) return;
+  lastBumpAt[index] = now;
+
+  const hitBody = bodies[index];
+  if (hitBody.velocity.y < 10) {
+    const bumpForce = new CANNON.Vec3(
+      (Math.random() - 0.5) * 180,
+      160 + Math.random() * 80,
+      (Math.random() - 0.5) * 180
+    );
+    const offset = new CANNON.Vec3(2.5, 2.5, 2.5);
+    hitBody.applyImpulse(bumpForce, hitBody.position.vadd(offset));
   }
-});
+}
+
+container.addEventListener(
+  "pointermove",
+  (event) => {
+    if (event.pointerType === "mouse") {
+      bumpFromClient(event.clientX, event.clientY);
+    }
+  },
+  { passive: true }
+);
+
+container.addEventListener(
+  "pointerdown",
+  (event) => {
+    bumpFromClient(event.clientX, event.clientY);
+  },
+  { passive: true }
+);
 
 /* --- Render loop --- */
 const clock = new THREE.Clock();
@@ -242,3 +285,7 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+// Ensure correct size after layout settles (mobile address bar / late CSS)
+requestAnimationFrame(resizeRenderer);
+setTimeout(resizeRenderer, 100);

@@ -28,6 +28,10 @@
             font-family: 'Inter', sans-serif;
         }
 
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
         body {
             background-color: var(--bg-color);
             background-image: 
@@ -38,6 +42,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
+            overflow-x: hidden;
         }
 
         .container {
@@ -47,6 +52,11 @@
             grid-template-columns: 1fr 2.2fr;
             gap: 35px;
             align-items: start;
+        }
+
+        .left-column,
+        .right-column {
+            min-width: 0;
         }
 
         /* STICKY LEFT COLUMN SETUP */
@@ -122,7 +132,7 @@
             border: 1px solid rgba(255, 255, 255, 0.03); transition: border-color 0.2s ease;
         }
         .contact-item:hover { border-color: var(--accent-secondary); }
-        .contact-item a { color: var(--accent-secondary); text-decoration: none; font-weight: 500; }
+        .contact-item a { color: var(--accent-secondary); text-decoration: none; font-weight: 500; overflow-wrap: anywhere; }
 
         .date-badge {
             font-size: 0.8rem;
@@ -181,6 +191,10 @@
 
         /* Right Column Setup */
         .right-column { display: flex; flex-direction: column; gap: 30px; }
+
+        .section-heading { padding: 10px 0; }
+        .section-heading.is-projects { padding: 20px 0 10px; }
+        .section-title { font-size: clamp(1.45rem, 4.5vw, 2rem); }
 
         .projects-grid {
             display: grid;
@@ -257,6 +271,7 @@
         .gradient-text {
             background: var(--accent-gradient);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -292,10 +307,97 @@
         /* Responsive Behavior */
         @media (max-width: 1024px) {
             body { padding: 40px 20px; }
-            .container { grid-template-columns: 1fr; }
+            .container { grid-template-columns: 1fr; gap: 28px; }
             .left-column { position: relative; top: 0; max-height: none; overflow-y: visible; padding-right: 0; }
             .projects-grid { grid-template-columns: 1fr; }
             .btn-close-resume { top: 16px; right: 16px; width: 48px; height: 48px; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 72px 18px 40px;
+                padding-left: max(18px, env(safe-area-inset-left, 0px));
+                padding-right: max(18px, env(safe-area-inset-right, 0px));
+            }
+
+            .container { gap: 22px; }
+            .left-column, .right-column { gap: 20px; }
+
+            .card { padding: 22px; border-radius: 20px; }
+            .timeline-card { padding: 22px; border-radius: 18px; }
+
+            h2 { font-size: 1.2rem; margin-bottom: 14px; }
+            h3 { font-size: 1.05rem; }
+            p { font-size: 0.9rem; }
+            ul { font-size: 0.9rem; margin-left: 16px; }
+
+            .timeline-container { padding-left: 20px; gap: 20px; }
+            .timeline-card::before { left: -26px; top: 28px; width: 10px; height: 10px; }
+
+            .section-heading { padding: 4px 0; }
+            .section-heading.is-projects { padding: 12px 0 4px; }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 68px 14px 32px; }
+
+            .container { gap: 18px; }
+            .card { padding: 18px; border-radius: 18px; }
+            .timeline-card { padding: 18px; border-radius: 16px; }
+
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.1rem; }
+            h3 { font-size: 1rem; }
+            h4 { font-size: 0.85rem; }
+            p, ul { font-size: 0.88rem; }
+
+            .contact-item { font-size: 0.82rem; padding: 8px 10px; align-items: flex-start; }
+            .metrics-bar { gap: 8px; }
+            .metric-box { padding: 8px 4px; }
+            .metric-num { font-size: 1.05rem; }
+            .metric-label { font-size: 0.62rem; letter-spacing: 0.2px; }
+
+            .tag { font-size: 0.76rem; padding: 5px 10px; }
+            .skills-grid { gap: 14px; }
+
+            .timeline-container { padding-left: 16px; }
+            .timeline-card::before { left: -21px; top: 24px; }
+
+            .btn-close-resume { top: 12px; right: 12px; width: 42px; height: 42px; font-size: 1.2rem; }
+        }
+
+        @media (max-width: 400px) {
+            body { padding: 64px 12px 28px; }
+            .card, .timeline-card { padding: 16px; }
+            h1 { font-size: 1.4rem; }
+            .metrics-bar { grid-template-columns: 1fr 1fr; }
+            .metrics-bar .metric-box:last-child { grid-column: span 2; }
+        }
+
+        /* Neutralize hover-only affordances on touch devices */
+        @media (hover: none) {
+            .card:hover {
+                border-color: var(--card-border);
+                box-shadow: var(--shadow-card), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            }
+            .contact-item:hover { border-color: rgba(255, 255, 255, 0.03); }
+            .tag:hover { transform: none; box-shadow: none; border-color: var(--card-border); }
+            .timeline-card:hover::before {
+                transform: none;
+                background: var(--accent-primary);
+                box-shadow: 0 0 10px var(--accent-primary);
+            }
+            .btn-close-resume:hover {
+                transform: none;
+                background: rgba(21, 24, 33, 0.9);
+                color: var(--text-main);
+                border-color: var(--card-border);
+            }
+        }
+
+        @media print {
+            body { padding: 0; background: #fff; color: #000; }
+            .btn-close-resume { display: none; }
         }
     </style>
 </head>
@@ -395,8 +497,8 @@
         <!-- RIGHT COLUMN: Scrollable Experience Timeline & Projects -->
         <div class="right-column">
             
-            <div style="padding: 10px 0;">
-                <h2 style="font-size: 2rem;" class="gradient-text">Professional Experience</h2>
+            <div class="section-heading">
+                <h2 class="section-title gradient-text">Professional Experience</h2>
             </div>
 
             <!-- STEPPER CONNECTOR TIMELINE -->
@@ -470,8 +572,8 @@
             </div>
 
             <!-- Key Projects Section -->
-            <div style="padding: 20px 0 10px 0;">
-                <h2 style="font-size: 2rem;" class="gradient-text">Key Projects</h2>
+            <div class="section-heading is-projects">
+                <h2 class="section-title gradient-text">Key Projects</h2>
             </div>
 
             <div class="projects-grid">
@@ -502,12 +604,21 @@
     </div>
 
     <script>
-        // Smooth 3D Tilt Effect
+        // Smooth 3D Tilt Effect (pointer devices only)
         const cards = document.querySelectorAll('.card');
+        const tiltQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+        function resetTilt() {
+            cards.forEach(card => {
+                card.style.transform = '';
+            });
+        }
+
+        tiltQuery.addEventListener('change', resetTilt);
 
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
-                if (!card.hasAttribute('data-tilt')) return;
+                if (!card.hasAttribute('data-tilt') || !tiltQuery.matches) return;
 
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
