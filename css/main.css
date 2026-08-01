@@ -1146,10 +1146,10 @@ body.case-study-open .custom-cursor {
 @media (max-width: 900px) {
   .hero-section {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 1.5rem;
     text-align: center;
-    padding: 80px 5% 40px;
+    padding: 120px 5% 8vh;
   }
 
   .hero-left,
@@ -1199,9 +1199,12 @@ body.case-study-open .custom-cursor {
     font-size: 1.25rem;
   }
 
+  /* Card sits near the top so the hero copy can sit below it */
   .card-wrapper {
-    width: 240px;
-    height: 312px;
+    top: 92px;
+    transform: translate(-50%, 0);
+    width: 300px;
+    height: 390px;
   }
 
   .card-face {
@@ -1366,12 +1369,12 @@ body.case-study-open .custom-cursor {
   }
 
   .hero-section {
-    gap: 1rem;
-    padding: 72px 4% 32px;
+    gap: 0.75rem;
+    padding: 104px 4% 6vh;
   }
 
   .huge-text {
-    font-size: 18vw;
+    font-size: 17vw;
   }
 
   .subtitle {
@@ -1410,8 +1413,9 @@ body.case-study-open .custom-cursor {
   }
 
   .card-wrapper {
-    width: 200px;
-    height: 260px;
+    top: 76px;
+    width: 250px;
+    height: 325px;
   }
 
   .tools-header {
@@ -1534,5 +1538,33 @@ body.case-study-open .custom-cursor {
   .btn-back-to-top {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* Landscape phones / short windows can't fit the stacked hero at full size */
+@media (max-width: 900px) and (orientation: landscape) {
+  .card-wrapper {
+    top: 64px;
+    width: 170px;
+    height: 221px;
+  }
+
+  .hero-section {
+    padding: 76px 5% 20px;
+    gap: 0.4rem;
+  }
+
+  .huge-text {
+    font-size: clamp(1.75rem, 9vh, 3.25rem);
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
+    margin-bottom: 0;
+  }
+
+  .desc {
+    font-size: 0.85rem;
+    margin-top: 4px;
   }
 }
