@@ -10,10 +10,12 @@ const tCtx = trailCanvas.getContext("2d");
 const finePointerQuery = window.matchMedia("(pointer: fine)");
 const narrowLayoutQuery = window.matchMedia("(max-width: 900px)");
 const phoneLayoutQuery = window.matchMedia("(max-width: 600px)");
+const compactHeroQuery = window.matchMedia("(max-width: 900px) and (orientation: landscape)");
 
 let isFinePointer = finePointerQuery.matches;
 let isNarrowLayout = narrowLayoutQuery.matches;
 let isPhoneLayout = phoneLayoutQuery.matches;
+let isCompactHero = compactHeroQuery.matches;
 
 function syncPointerMode() {
   isFinePointer = finePointerQuery.matches;
@@ -28,13 +30,16 @@ function syncPointerMode() {
 function syncLayoutMode() {
   isNarrowLayout = narrowLayoutQuery.matches;
   isPhoneLayout = phoneLayoutQuery.matches;
+  isCompactHero = compactHeroQuery.matches;
+  updateCardSize();
 }
 
 finePointerQuery.addEventListener("change", syncPointerMode);
 narrowLayoutQuery.addEventListener("change", syncLayoutMode);
 phoneLayoutQuery.addEventListener("change", syncLayoutMode);
+compactHeroQuery.addEventListener("change", syncLayoutMode);
+window.addEventListener("resize", syncLayoutMode);
 syncPointerMode();
-syncLayoutMode();
 
 document.querySelectorAll("a, button, #canvas-container").forEach((el) => {
   el.addEventListener("mouseenter", () => {
@@ -153,9 +158,38 @@ const projectUI = document.getElementById("projectUI");
 const processItems = document.querySelectorAll(".process-item");
 const stickyVisual = document.querySelector(".sticky-visual-container");
 
+// Sizes mirror the .card-wrapper rules in main.css, which these inline styles override
 const CARD_DESKTOP = { width: 400, height: 520 };
-const CARD_TABLET = { width: 240, height: 312 };
-const CARD_PHONE = { width: 200, height: 260 };
+const CARD_TABLET = { width: 300, height: 390 };
+const CARD_PHONE = { width: 250, height: 325 };
+const CARD_COMPACT = { width: 170, height: 221 };
+const CARD_RATIO = CARD_DESKTOP.height / CARD_DESKTOP.width;
+
+let currentCardSize = CARD_DESKTOP;
+
+// On mobile the card is top-anchored and the hero copy sits below it, so its
+// height is capped against the viewport to keep the two from colliding.
+function updateCardSize() {
+  if (!isNarrowLayout) {
+    currentCardSize = CARD_DESKTOP;
+    return;
+  }
+
+  if (isCompactHero) {
+    currentCardSize = CARD_COMPACT;
+    return;
+  }
+
+  const cap = isPhoneLayout ? CARD_PHONE : CARD_TABLET;
+  const height = Math.min(cap.height, Math.max(240, window.innerHeight * 0.45));
+
+  currentCardSize = {
+    width: Math.round(height / CARD_RATIO),
+    height: Math.round(height),
+  };
+}
+
+syncLayoutMode();
 
 const images = [
   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
@@ -185,11 +219,7 @@ function renderEngine() {
   const heroPhase = Math.max(0, Math.min(1, scrollProgress));
   const cardProgress = Math.max(0, Math.min(5.5, scrollProgress));
 
-  const size = isPhoneLayout
-    ? CARD_PHONE
-    : isNarrowLayout
-      ? CARD_TABLET
-      : CARD_DESKTOP;
+  const size = currentCardSize;
   const leftPosition = isNarrowLayout ? 50 : 50 + 25 * heroPhase;
 
   cardWrapper.style.left = `${leftPosition}%`;
