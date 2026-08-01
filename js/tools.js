@@ -41,6 +41,13 @@ function resizeRenderer() {
   camera.updateProjectionMatrix();
   renderer.setSize(width, height, false);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Camera distance changes across breakpoints, so re-park anything still waiting
+  for (let i = 0; i < parkedPositions.length; i++) {
+    if (!released[i] && parkedPositions[i]) {
+      parkedPositions[i].y = getParkY();
+    }
+  }
 }
 
 window.addEventListener("resize", resizeRenderer);
@@ -178,10 +185,35 @@ const brands = [
 const meshes = [];
 const bodies = [];
 const lastBumpAt = [];
+const parkedPositions = [];
+const released = new Array(brands.length).fill(false);
 
 const cubeSize = 8.5;
 const hdGeo = new RoundedBoxGeometry(cubeSize, cubeSize, cubeSize, 8, 1.2);
 const physicsShape = new CANNON.Box(new CANNON.Vec3(cubeSize / 2, cubeSize / 2, cubeSize / 2));
+
+const CEILING_LIMIT = 52;
+
+// Park height sits just above the visible frustum so cubes fall in from off-screen
+function getParkY() {
+  const vFov = (camera.fov * Math.PI) / 180;
+  const visibleHeight = 2 * Math.tan(vFov / 2) * camera.position.z;
+  return Math.min(CEILING_LIMIT, visibleHeight / 2 + cubeSize);
+}
+
+function parkBody(body, index) {
+  const parked = new CANNON.Vec3(
+    (Math.random() - 0.5) * 22,
+    getParkY(),
+    (Math.random() - 0.5) * 6
+  );
+
+  body.velocity.set(0, 0, 0);
+  body.angularVelocity.set(0, 0, 0);
+  body.position.copy(parked);
+  body.quaternion.setFromEuler(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+  parkedPositions[index] = parked;
+}
 
 function spawnCube(brand) {
   const maps = createHDTexture(brand.text, brand.bg, brand.fg, brand);
@@ -203,16 +235,62 @@ function spawnCube(brand) {
   lastBumpAt.push(0);
 
   const body = new CANNON.Body({ mass: 2, shape: physicsShape, material: defaultMaterial });
-  body.position.set((Math.random() - 0.5) * 16, 25, (Math.random() - 0.5) * 6);
-  body.quaternion.setFromEuler(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+  parkBody(body, bodies.length);
 
   world.addBody(body);
   bodies.push(body);
 }
 
+// Meshes are built up front so texture work never happens mid-scroll,
+// but each body stays pinned above the frame until its drop is released.
 brands.forEach((brand, index) => {
-  setTimeout(() => spawnCube(brand), index * 400);
+  setTimeout(() => spawnCube(brand), index * 120);
 });
+
+/* --- Drop sequence, triggered by viewport entry --- */
+const clock = new THREE.Clock();
+let dropStarted = false;
+let isVisible = false;
+
+function startDrop() {
+  if (dropStarted) return;
+  dropStarted = true;
+
+  for (let i = 0; i < released.length; i++) {
+    released[i] = true;
+  }
+}
+
+function resetDrop() {
+  if (!dropStarted) return;
+  dropStarted = false;
+
+  for (let i = 0; i < released.length; i++) {
+    released[i] = false;
+  }
+  bodies.forEach((body, index) => parkBody(body, index));
+}
+
+if (typeof IntersectionObserver !== "undefined") {
+  const dropObserver = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[entries.length - 1];
+      isVisible = entry.isIntersecting;
+
+      if (entry.isIntersecting) {
+        clock.getDelta();
+        if (entry.intersectionRatio >= 0.2) startDrop();
+      } else {
+        resetDrop();
+      }
+    },
+    { threshold: [0, 0.2, 0.5] }
+  );
+  dropObserver.observe(container);
+} else {
+  isVisible = true;
+  startDrop();
+}
 
 /* --- Pointer / touch interaction --- */
 const raycaster = new THREE.Raycaster();
@@ -272,11 +350,22 @@ container.addEventListener(
 );
 
 /* --- Render loop --- */
-const clock = new THREE.Clock();
-
 function animate() {
   requestAnimationFrame(animate);
-  world.step(1 / 60, clock.getDelta(), 3);
+
+  const delta = clock.getDelta();
+  if (!isVisible) return;
+
+  // Hold un-released cubes above the frame so they drop in sequence
+  for (let i = 0; i < bodies.length; i++) {
+    if (!released[i] && parkedPositions[i]) {
+      bodies[i].position.copy(parkedPositions[i]);
+      bodies[i].velocity.set(0, 0, 0);
+      bodies[i].angularVelocity.set(0, 0, 0);
+    }
+  }
+
+  world.step(1 / 60, delta, 3);
 
   for (let i = 0; i < meshes.length; i++) {
     meshes[i].position.copy(bodies[i].position);

@@ -131,6 +131,18 @@ function animateTrail() {
 animateTrail();
 
 /* ==============================================
+   FOOTER
+   ============================================== */
+const backToTopBtn = document.getElementById("btn-back-to-top");
+
+if (backToTopBtn) {
+  backToTopBtn.addEventListener("click", () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+}
+
+/* ==============================================
    3D SCROLL & CARD MORPHING
    ============================================== */
 const cardWrapper = document.getElementById("cardWrapper");
