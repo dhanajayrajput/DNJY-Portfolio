@@ -7,9 +7,42 @@ const bCtx = bgCanvas.getContext("2d");
 const trailCanvas = document.getElementById("trailCanvas");
 const tCtx = trailCanvas.getContext("2d");
 
+const finePointerQuery = window.matchMedia("(pointer: fine)");
+const narrowLayoutQuery = window.matchMedia("(max-width: 900px)");
+const phoneLayoutQuery = window.matchMedia("(max-width: 600px)");
+
+let isFinePointer = finePointerQuery.matches;
+let isNarrowLayout = narrowLayoutQuery.matches;
+let isPhoneLayout = phoneLayoutQuery.matches;
+
+function syncPointerMode() {
+  isFinePointer = finePointerQuery.matches;
+  document.body.classList.toggle("coarse-pointer", !isFinePointer);
+  if (!isFinePointer && customCursor) {
+    customCursor.style.opacity = "0";
+  } else if (customCursor) {
+    customCursor.style.opacity = "";
+  }
+}
+
+function syncLayoutMode() {
+  isNarrowLayout = narrowLayoutQuery.matches;
+  isPhoneLayout = phoneLayoutQuery.matches;
+}
+
+finePointerQuery.addEventListener("change", syncPointerMode);
+narrowLayoutQuery.addEventListener("change", syncLayoutMode);
+phoneLayoutQuery.addEventListener("change", syncLayoutMode);
+syncPointerMode();
+syncLayoutMode();
+
 document.querySelectorAll("a, button, #canvas-container").forEach((el) => {
-  el.addEventListener("mouseenter", () => customCursor.classList.add("hover-state"));
-  el.addEventListener("mouseleave", () => customCursor.classList.remove("hover-state"));
+  el.addEventListener("mouseenter", () => {
+    if (isFinePointer) customCursor.classList.add("hover-state");
+  });
+  el.addEventListener("mouseleave", () => {
+    if (isFinePointer) customCursor.classList.remove("hover-state");
+  });
 });
 
 function resizeCanvases() {
@@ -38,6 +71,8 @@ let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
 
 window.addEventListener("mousemove", (e) => {
+  if (!isFinePointer) return;
+
   mouseX = e.clientX;
   mouseY = e.clientY;
   customCursor.style.left = e.clientX + "px";
@@ -96,6 +131,18 @@ function animateTrail() {
 animateTrail();
 
 /* ==============================================
+   FOOTER
+   ============================================== */
+const backToTopBtn = document.getElementById("btn-back-to-top");
+
+if (backToTopBtn) {
+  backToTopBtn.addEventListener("click", () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+}
+
+/* ==============================================
    3D SCROLL & CARD MORPHING
    ============================================== */
 const cardWrapper = document.getElementById("cardWrapper");
@@ -104,6 +151,11 @@ const faceAImg = document.getElementById("faceA-img");
 const faceBImg = document.getElementById("faceB-img");
 const projectUI = document.getElementById("projectUI");
 const processItems = document.querySelectorAll(".process-item");
+const stickyVisual = document.querySelector(".sticky-visual-container");
+
+const CARD_DESKTOP = { width: 400, height: 520 };
+const CARD_TABLET = { width: 240, height: 312 };
+const CARD_PHONE = { width: 200, height: 260 };
 
 const images = [
   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
@@ -133,11 +185,29 @@ function renderEngine() {
   const heroPhase = Math.max(0, Math.min(1, scrollProgress));
   const cardProgress = Math.max(0, Math.min(5.5, scrollProgress));
 
-  const leftPosition = 50 + 25 * heroPhase;
+  const size = isPhoneLayout
+    ? CARD_PHONE
+    : isNarrowLayout
+      ? CARD_TABLET
+      : CARD_DESKTOP;
+  const leftPosition = isNarrowLayout ? 50 : 50 + 25 * heroPhase;
+
   cardWrapper.style.left = `${leftPosition}%`;
-  cardWrapper.style.width = "400px";
-  cardWrapper.style.height = "520px";
+  cardWrapper.style.width = `${size.width}px`;
+  cardWrapper.style.height = `${size.height}px`;
   projectUI.style.opacity = 0;
+
+  // On narrow screens, hide card once process section is active
+  const inProcess = scrollProgress >= 0.5 && scrollProgress < 5.5;
+  if (stickyVisual) {
+    if (isNarrowLayout && inProcess) {
+      stickyVisual.style.opacity = "0";
+      stickyVisual.style.visibility = "hidden";
+    } else {
+      stickyVisual.style.opacity = "";
+      stickyVisual.style.visibility = "";
+    }
+  }
 
   const baseRotationY = -180 * cardProgress;
   const scrollTiltX = Math.sin(cardProgress * Math.PI) * -5;

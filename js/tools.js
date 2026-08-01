@@ -3,22 +3,30 @@ import { RoundedBoxGeometry } from "https://cdn.skypack.dev/three@0.136.0/exampl
 import * as CANNON from "https://cdn.skypack.dev/cannon-es";
 
 const container = document.getElementById("canvas-container");
+const narrowQuery = window.matchMedia("(max-width: 900px)");
+const phoneQuery = window.matchMedia("(max-width: 600px)");
 
 function getSize() {
   return {
-    width: container.clientWidth || window.innerWidth,
-    height: container.clientHeight || window.innerHeight,
+    width: Math.max(1, container.clientWidth || window.innerWidth),
+    height: Math.max(1, container.clientHeight || window.innerHeight),
   };
+}
+
+function getCameraZ() {
+  if (phoneQuery.matches) return 78;
+  if (narrowQuery.matches) return 68;
+  return 55;
 }
 
 /* --- Scene --- */
 const scene = new THREE.Scene();
 const { width: initW, height: initH } = getSize();
 const camera = new THREE.PerspectiveCamera(45, initW / initH, 0.1, 200);
-camera.position.set(0, 0, 55);
+camera.position.set(0, 0, getCameraZ());
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(initW, initH);
+renderer.setSize(initW, initH, false);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -29,12 +37,27 @@ container.appendChild(renderer.domElement);
 function resizeRenderer() {
   const { width, height } = getSize();
   camera.aspect = width / height;
+  camera.position.z = getCameraZ();
   camera.updateProjectionMatrix();
-  renderer.setSize(width, height);
+  renderer.setSize(width, height, false);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Camera distance changes across breakpoints, so re-park anything still waiting
+  for (let i = 0; i < parkedPositions.length; i++) {
+    if (!released[i] && parkedPositions[i]) {
+      parkedPositions[i].y = getParkY();
+    }
+  }
 }
 
 window.addEventListener("resize", resizeRenderer);
+narrowQuery.addEventListener("change", resizeRenderer);
+phoneQuery.addEventListener("change", resizeRenderer);
+
+if (typeof ResizeObserver !== "undefined") {
+  const ro = new ResizeObserver(() => resizeRenderer());
+  ro.observe(container);
+}
 
 /* --- Physics --- */
 const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -60, 0) });
@@ -161,10 +184,36 @@ const brands = [
 /* --- Cubes --- */
 const meshes = [];
 const bodies = [];
+const lastBumpAt = [];
+const parkedPositions = [];
+const released = new Array(brands.length).fill(false);
 
 const cubeSize = 8.5;
 const hdGeo = new RoundedBoxGeometry(cubeSize, cubeSize, cubeSize, 8, 1.2);
 const physicsShape = new CANNON.Box(new CANNON.Vec3(cubeSize / 2, cubeSize / 2, cubeSize / 2));
+
+const CEILING_LIMIT = 52;
+
+// Park height sits just above the visible frustum so cubes fall in from off-screen
+function getParkY() {
+  const vFov = (camera.fov * Math.PI) / 180;
+  const visibleHeight = 2 * Math.tan(vFov / 2) * camera.position.z;
+  return Math.min(CEILING_LIMIT, visibleHeight / 2 + cubeSize);
+}
+
+function parkBody(body, index) {
+  const parked = new CANNON.Vec3(
+    (Math.random() - 0.5) * 22,
+    getParkY(),
+    (Math.random() - 0.5) * 6
+  );
+
+  body.velocity.set(0, 0, 0);
+  body.angularVelocity.set(0, 0, 0);
+  body.position.copy(parked);
+  body.quaternion.setFromEuler(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+  parkedPositions[index] = parked;
+}
 
 function spawnCube(brand) {
   const maps = createHDTexture(brand.text, brand.bg, brand.fg, brand);
@@ -183,57 +232,140 @@ function spawnCube(brand) {
   mesh.receiveShadow = true;
   scene.add(mesh);
   meshes.push(mesh);
+  lastBumpAt.push(0);
 
   const body = new CANNON.Body({ mass: 2, shape: physicsShape, material: defaultMaterial });
-  body.position.set((Math.random() - 0.5) * 16, 25, (Math.random() - 0.5) * 6);
-  body.quaternion.setFromEuler(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+  parkBody(body, bodies.length);
 
   world.addBody(body);
   bodies.push(body);
 }
 
+// Meshes are built up front so texture work never happens mid-scroll,
+// but each body stays pinned above the frame until its drop is released.
 brands.forEach((brand, index) => {
-  setTimeout(() => spawnCube(brand), index * 400);
+  setTimeout(() => spawnCube(brand), index * 120);
 });
 
-/* --- Hover interaction --- */
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
+/* --- Drop sequence, triggered by viewport entry --- */
+const clock = new THREE.Clock();
+let dropStarted = false;
+let isVisible = false;
 
-container.addEventListener("mousemove", (event) => {
-  const rect = container.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+function startDrop() {
+  if (dropStarted) return;
+  dropStarted = true;
 
-  mouse.x = (x / rect.width) * 2 - 1;
-  mouse.y = -(y / rect.height) * 2 + 1;
-
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(meshes);
-
-  if (intersects.length > 0) {
-    const hitMesh = intersects[0].object;
-    const index = meshes.indexOf(hitMesh);
-    const hitBody = bodies[index];
-
-    if (hitBody.velocity.y < 10) {
-      const bumpForce = new CANNON.Vec3(
-        (Math.random() - 0.5) * 180,
-        160 + Math.random() * 80,
-        (Math.random() - 0.5) * 180
-      );
-      const offset = new CANNON.Vec3(2.5, 2.5, 2.5);
-      hitBody.applyImpulse(bumpForce, hitBody.position.vadd(offset));
-    }
+  for (let i = 0; i < released.length; i++) {
+    released[i] = true;
   }
-});
+}
+
+function resetDrop() {
+  if (!dropStarted) return;
+  dropStarted = false;
+
+  for (let i = 0; i < released.length; i++) {
+    released[i] = false;
+  }
+  bodies.forEach((body, index) => parkBody(body, index));
+}
+
+if (typeof IntersectionObserver !== "undefined") {
+  const dropObserver = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[entries.length - 1];
+      isVisible = entry.isIntersecting;
+
+      if (entry.isIntersecting) {
+        clock.getDelta();
+        if (entry.intersectionRatio >= 0.2) startDrop();
+      } else {
+        resetDrop();
+      }
+    },
+    { threshold: [0, 0.2, 0.5] }
+  );
+  dropObserver.observe(container);
+} else {
+  isVisible = true;
+  startDrop();
+}
+
+/* --- Pointer / touch interaction --- */
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+const BUMP_COOLDOWN_MS = 220;
+
+function bumpFromClient(clientX, clientY) {
+  const rect = container.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return;
+
+  const x = clientX - rect.left;
+  const y = clientY - rect.top;
+
+  pointer.x = (x / rect.width) * 2 - 1;
+  pointer.y = -(y / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(pointer, camera);
+  const intersects = raycaster.intersectObjects(meshes);
+  if (!intersects.length) return;
+
+  const hitMesh = intersects[0].object;
+  const index = meshes.indexOf(hitMesh);
+  if (index < 0) return;
+
+  const now = performance.now();
+  if (now - lastBumpAt[index] < BUMP_COOLDOWN_MS) return;
+  lastBumpAt[index] = now;
+
+  const hitBody = bodies[index];
+  if (hitBody.velocity.y < 10) {
+    const bumpForce = new CANNON.Vec3(
+      (Math.random() - 0.5) * 180,
+      160 + Math.random() * 80,
+      (Math.random() - 0.5) * 180
+    );
+    const offset = new CANNON.Vec3(2.5, 2.5, 2.5);
+    hitBody.applyImpulse(bumpForce, hitBody.position.vadd(offset));
+  }
+}
+
+container.addEventListener(
+  "pointermove",
+  (event) => {
+    if (event.pointerType === "mouse") {
+      bumpFromClient(event.clientX, event.clientY);
+    }
+  },
+  { passive: true }
+);
+
+container.addEventListener(
+  "pointerdown",
+  (event) => {
+    bumpFromClient(event.clientX, event.clientY);
+  },
+  { passive: true }
+);
 
 /* --- Render loop --- */
-const clock = new THREE.Clock();
-
 function animate() {
   requestAnimationFrame(animate);
-  world.step(1 / 60, clock.getDelta(), 3);
+
+  const delta = clock.getDelta();
+  if (!isVisible) return;
+
+  // Hold un-released cubes above the frame so they drop in sequence
+  for (let i = 0; i < bodies.length; i++) {
+    if (!released[i] && parkedPositions[i]) {
+      bodies[i].position.copy(parkedPositions[i]);
+      bodies[i].velocity.set(0, 0, 0);
+      bodies[i].angularVelocity.set(0, 0, 0);
+    }
+  }
+
+  world.step(1 / 60, delta, 3);
 
   for (let i = 0; i < meshes.length; i++) {
     meshes[i].position.copy(bodies[i].position);
@@ -242,3 +374,7 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+// Ensure correct size after layout settles (mobile address bar / late CSS)
+requestAnimationFrame(resizeRenderer);
+setTimeout(resizeRenderer, 100);
