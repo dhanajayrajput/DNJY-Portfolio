@@ -4,46 +4,98 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dhananjay Sagar - UI/UX Designer</title>
-    <!-- Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/comic-book.css" />
+    <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <!-- CURSOR & BACKGROUND -->
-    <div id="customCursor" class="custom-cursor"></div>
-    <canvas id="bgCanvas" class="bg-canvas"></canvas>
-    <canvas id="trailCanvas" class="trail-canvas"></canvas>
+    <!-- Cursor & particle canvases -->
+    <div id="customCursor" class="custom-cursor" aria-hidden="true"></div>
+    <canvas id="bgCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+    <canvas id="trailCanvas" class="trail-canvas" aria-hidden="true"></canvas>
 
-    <!-- NAVBAR -->
-    <nav>
+    <!-- Navbar -->
+    <nav class="site-nav" aria-label="Primary">
       <div class="nav-profile">
         <img
           src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&fit=crop"
           alt="Dhananjay"
         />
-        Available for work <span class="dot"></span>
+        Available for work <span class="dot" aria-hidden="true"></span>
       </div>
-      <button class="contact-btn" id="contactBtn">Contact</button>
     </nav>
 
-    <!-- GLOBAL 3D FLOATING CARD (Transforms into Project Card) -->
-    <div class="sticky-visual-container">
+    <!-- Corner actions -->
+    <div class="corner-actions" aria-label="Quick links">
+      <a
+        href="#showcase"
+        class="corner-btn"
+        title="Projects"
+        aria-label="Go to projects"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+        </svg>
+      </a>
+      <a
+        href="RESUMEFORPORTFOLIO.HTML"
+        class="corner-btn"
+        title="Resume"
+        aria-label="Open resume"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          ></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="8" y1="13" x2="16" y2="13"></line>
+          <line x1="8" y1="17" x2="16" y2="17"></line>
+          <line x1="8" y1="9" x2="10" y2="9"></line>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Global 3D floating card (morphs into project card) -->
+    <div class="sticky-visual-container" aria-hidden="true">
       <div class="card-wrapper" id="cardWrapper">
         <div class="card-3d" id="card3D">
-          <!-- Face A: Also acts as the final Project Card -->
           <div class="card-face card-front">
-            <img id="faceA-img" src="" alt="Dynamic Image A" />
-
-            <!-- HIDDEN UNTIL PROJECT SECTION -->
-            <div id="projectUI" style="opacity: 0">
+            <img id="faceA-img" src="" alt="" />
+            <div id="projectUI" class="project-ui">
               <div class="inner-shadow"></div>
               <div class="project-content">
                 <h2 class="project-title">
-                  Evaluating Error & Confirmation Models
+                  Evaluating Error &amp; Confirmation Models
                 </h2>
                 <p class="project-desc">
                   A deep dive into analyzing user experience gaps to design
@@ -53,318 +105,330 @@
               </div>
             </div>
           </div>
-
-          <!-- Face B -->
           <div class="card-face card-back">
-            <img id="faceB-img" src="" alt="Dynamic Image B" />
+            <img id="faceB-img" src="" alt="" />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SCROLL TRACK -->
-    <div id="scrollTrack">
-      <!-- SECTION 1: HERO (100vh) - UPDATED CONTENT -->
-      <div class="hero-section">
+    <!-- Page sections -->
+    <main id="scrollTrack">
+      <!-- 1. Hero -->
+      <section class="hero-section" id="home" aria-label="Hero">
         <div class="hero-left">
-          <p class="subtitle">DHANANJAY SAGAR</p>
+          <p class="subtitle">Dhananjay Sagar</p>
           <h1 class="huge-text">UI/UX</h1>
         </div>
         <div class="hero-right">
-          <h1 class="huge-text">DESIGNER</h1>
+          <h1 class="huge-text">Designer</h1>
           <p class="desc">Product Designer<br />Living in Pune</p>
         </div>
-      </div>
+      </section>
 
-      <!-- SECTION 2: PROCESS (500vh) -->
-      <div class="process-scroll-container" id="processSection">
+      <!-- 2. Process -->
+      <section
+        class="process-scroll-container"
+        id="process"
+        aria-label="Design process"
+      >
         <div class="process-sticky">
           <div class="process-content-left">
             <h2 class="section-title">My Process</h2>
 
             <div class="process-list">
-              <div class="process-item" data-step="0">
+              <article class="process-item" data-step="0">
                 <div class="process-header">
-                  <span class="process-title">1. Empathize</span
-                  ><span class="process-subtitle"
-                    >Research & Understand Users</span
+                  <span class="process-title">1. Empathize</span>
+                  <span class="process-subtitle"
+                    >Research &amp; Understand Users</span
                   >
                 </div>
                 <div class="process-body">
                   Conduct stakeholder interviews, user interviews, empathy
                   mapping, surveys and contextual inquiry.
                 </div>
-              </div>
-              <div class="process-item" data-step="1">
+              </article>
+
+              <article class="process-item" data-step="1">
                 <div class="process-header">
-                  <span class="process-title">2. Define</span
-                  ><span class="process-subtitle">Problem Definition</span>
+                  <span class="process-title">2. Define</span>
+                  <span class="process-subtitle">Problem Definition</span>
                 </div>
                 <div class="process-body">
                   Analyze user experience gaps and define clear user problems to
                   guide product development.
                 </div>
-              </div>
-              <div class="process-item" data-step="2">
+              </article>
+
+              <article class="process-item" data-step="2">
                 <div class="process-header">
-                  <span class="process-title">3. Ideate</span
-                  ><span class="process-subtitle">Generate Solutions</span>
+                  <span class="process-title">3. Ideate</span>
+                  <span class="process-subtitle">Generate Solutions</span>
                 </div>
                 <div class="process-body">
                   Brainstorm effective solutions, including designing robust
                   error and confirmation models.
                 </div>
-              </div>
-              <div class="process-item" data-step="3">
+              </article>
+
+              <article class="process-item" data-step="3">
                 <div class="process-header">
-                  <span class="process-title">4. Prototype</span
-                  ><span class="process-subtitle">Build & Validate</span>
+                  <span class="process-title">4. Prototype</span>
+                  <span class="process-subtitle">Build &amp; Validate</span>
                 </div>
                 <div class="process-body">
                   Create low to high-fidelity wireframes and interactive
                   prototypes.
                 </div>
-              </div>
-              <div class="process-item" data-step="4">
+              </article>
+
+              <article class="process-item" data-step="4">
                 <div class="process-header">
-                  <span class="process-title">5. Test</span
-                  ><span class="process-subtitle">Improve Experience</span>
+                  <span class="process-title">5. Test</span>
+                  <span class="process-subtitle">Improve Experience</span>
                 </div>
                 <div class="process-body">
                   Conduct usability testing sessions to validate solutions with
                   real users.
                 </div>
-              </div>
+              </article>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- SECTION 3: PROJECT CARD HOLDER (200vh) -->
-      <div class="project-scroll-container">
-        <div class="project-sticky">
-          <!-- Visuals are handled by the global 3D card! -->
-        </div>
-      </div>
-
-      <!-- SECTION 4: 3D TOOL CUBES -->
-      <div class="tools-section">
-        <div id="canvas-container">
-          <div id="header">Design Arsenal</div>
-          <div id="instruction">Hover over the giant cubes to bump them</div>
-        </div>
-      </div>
-
-      <!-- SECTION 5: COMIC BOOK CASE STUDY -->
-      <section class="comic-project-section" id="comicProjectSection">
-        <!-- HUD HEADER -->
-        <div class="hud-header">
-          <h1 class="hud-title">DHANANJAY SAGAR</h1>
-          <div class="hud-hint" id="hudHint">
-            ⌛ OPENING BOOK IN 2 SECONDS...
-          </div>
-        </div>
-
-        <!-- 3D BOOK STAGE -->
-        <div class="book-stage" id="bookStage">
-          <div class="book-container" id="bookContainer">
-            <!-- Spine Center Binding -->
-            <div class="book-spine"></div>
-
-            <!-- PAGE 1: FRONT COVER / INSIDE PAGE 1 (YOGNII OVERVIEW) -->
-            <div class="page" data-page="0">
-              <!-- FRONT COVER (CLOSED BOOK LOOK) -->
-              <div class="page-face cover-style">
-                <div>
-                  <div class="cover-badge">VOL. 01 • ORIGINAL EDITION</div>
-                  <h2 class="cover-title">THE DESIGN<br />CHRONICLES</h2>
-                  <div class="cover-author">BY DHANANJAY SAGAR</div>
-                  <div class="gesture-prompt">
-                    👉 CLICK OR SCROLL TO FLIP PAGES
-                  </div>
-                </div>
-              </div>
-              <!-- PAGE 1 (LEFT SPREAD INSIDE COVER) -->
-              <div class="page-face page-back">
-                <div>
-                  <span class="action-caption"
-                    >PROJECT 01 • RESEARCH & OVERVIEW</span
-                  >
-                  <h3 class="comic-title" style="margin-top: 5px">
-                    Yognii - Women Health Platform
-                  </h3>
-                  <div class="speech-bubble">
-                    "How do we analyze psychological stress without judging the
-                    user?"
-                  </div>
-                  <p class="comic-desc">
-                    Designed a holistic mental & physical health application
-                    introducing the Freud Score algorithm, contextual gap
-                    analysis, and mood tracking.
-                  </p>
-                </div>
-                <div class="page-num">PAGE 01</div>
-              </div>
-            </div>
-
-            <!-- PAGE 2: PROJECT 1 MULTI-IMAGE GALLERY / PROJECT 2 OVERVIEW -->
-            <div class="page" data-page="1">
-              <!-- PAGE 2 (RIGHT SPREAD 1: SCROLLABLE MULTI-IMAGE GALLERY) -->
-              <div class="page-face">
-                <div>
-                  <span class="action-caption"
-                    >PROJECT 01 • MULTI-SCREEN GALLERY (SCROLL ↕)</span
-                  >
-                  <div class="comic-panel-scrollable">
-                    <div>
-                      <img
-                        class="panel-img"
-                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
-                        alt="Yognii Screen 1"
-                      />
-                      <div class="img-caption">
-                        Screen 1: Freud Score & Mood Sliders
-                      </div>
-                    </div>
-                    <div>
-                      <img
-                        class="panel-img"
-                        src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop"
-                        alt="Yognii Screen 2"
-                      />
-                      <div class="img-caption">
-                        Screen 2: Audio Voice Journaling UI
-                      </div>
-                    </div>
-                  </div>
-                  <p class="comic-desc">
-                    Scroll inside the panel above to view all high-fidelity
-                    prototype screens!
-                  </p>
-                </div>
-                <div class="page-num">PAGE 02</div>
-              </div>
-              <!-- PAGE 3 (LEFT SPREAD 2: PROJECT 02 OVERVIEW) -->
-              <div class="page-face page-back">
-                <div>
-                  <span class="action-caption"
-                    >PROJECT 02 • RESEARCH & OVERVIEW</span
-                  >
-                  <h3 class="comic-title" style="margin-top: 5px">
-                    AI Resume Parser & Screening
-                  </h3>
-                  <div class="speech-bubble">
-                    "Recruiters spend 80% of their time manually correcting
-                    parsed data!"
-                  </div>
-                  <p class="comic-desc">
-                    Architected human-in-the-loop review flows, confidence state
-                    indicators, and automated field correction models.
-                  </p>
-                </div>
-                <div class="page-num">PAGE 03</div>
-              </div>
-            </div>
-
-            <!-- PAGE 3: PROJECT 2 MULTI-IMAGE GALLERY / GREETING & CONTACT PAGE -->
-            <div class="page" data-page="2">
-              <!-- PAGE 4 (RIGHT SPREAD 2: SCROLLABLE MULTI-IMAGE GALLERY) -->
-              <div class="page-face">
-                <div>
-                  <span class="action-caption"
-                    >PROJECT 02 • PARSER UI GALLERY (SCROLL ↕)</span
-                  >
-                  <div class="comic-panel-scrollable">
-                    <div>
-                      <img
-                        class="panel-img"
-                        src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop"
-                        alt="Parser Screen 1"
-                      />
-                      <div class="img-caption">
-                        Screen 1: Document Extraction Review
-                      </div>
-                    </div>
-                    <div>
-                      <img
-                        class="panel-img"
-                        src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop"
-                        alt="Parser Screen 2"
-                      />
-                      <div class="img-caption">
-                        Screen 2: High-Contrast Confidence Chips
-                      </div>
-                    </div>
-                  </div>
-                  <p class="comic-desc">
-                    Reduced recruiter screening time by 35% through
-                    human-in-the-loop validation.
-                  </p>
-                </div>
-                <div class="page-num">PAGE 04</div>
-              </div>
-              <!-- FINAL GREETING & THANK YOU PAGE -->
-              <div class="page-face page-back cover-style">
-                <div class="greeting-box">
-                  <img
-                    class="greeting-avatar"
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&fit=crop"
-                    alt="Dhananjay Sagar"
-                  />
-                  <h2
-                    class="cover-title"
-                    style="font-size: 2.2rem; margin-bottom: 5px"
-                  >
-                    THANK YOU!
-                  </h2>
-                  <div class="speech-bubble" style="margin-bottom: 5px">
-                    "Let's build intuitive, user-centered digital products
-                    together!"
-                  </div>
-                  <div
-                    style="
-                      font-size: 0.85rem;
-                      color: var(--text-main);
-                      font-family: &quot;Inter&quot;, sans-serif;
-                    "
-                  >
-                    ✉️ dhananjay.sagar@gmail.com | 📍 Pune, India
-                  </div>
-                  <div
-                    class="cover-badge reset-btn-badge"
-                    style="background: var(--accent-indigo); margin-top: 10px"
-                    id="resetBookBtn"
-                  >
-                    🔄 RE-OPEN BOOK
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CONTROLS -->
-        <div class="controls">
-          <button class="btn" id="prevPageBtn">&larr; Previous Page</button>
-          <button class="btn" id="nextPageBtn">Next Page &rarr;</button>
         </div>
       </section>
+
+      <!-- 3. Design arsenal -->
+      <section class="tools-section" id="tools" aria-label="Design tools">
+        <div id="canvas-container">
+          <div class="tools-header">Design Arsenal</div>
+          <div class="tools-instruction">Drag the cubes to bump them</div>
+        </div>
+      </section>
+
+      <!-- 4. Project showcase -->
+      <section
+        class="showcase-section"
+        id="showcase"
+        aria-label="Project showcase"
+      >
+        <div class="showcase-sticky">
+          <div class="section-indicator" id="showcase-indicator">
+            <div class="showcase-dot active"></div>
+            <div class="showcase-dot"></div>
+            <div class="showcase-dot"></div>
+            <div class="showcase-dot"></div>
+          </div>
+
+          <div class="showcase-wrapper" id="showcase-wrapper">
+            <div class="project-stack" id="project-stack">
+              <div class="project-frame active">
+                <nav class="frame-navbar">
+                  <div class="brand-logo">
+                    <span class="index">01</span> Runway — Native iOS
+                  </div>
+                  <button type="button" class="btn-project-action">
+                    <span>View Project</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </nav>
+                <div class="hero-banner">
+                  <div class="overlay-gradient"></div>
+                  <img src="assets/01.png" alt="Native iOS" />
+                  <div class="showcase-project-details">
+                    <div class="showcase-project-tag">
+                      iOS System Architecture
+                    </div>
+                    <h2 class="hero-headline">
+                      Runway — Native<br />iOS Design
+                    </h2>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project-frame next-in-line">
+                <nav class="frame-navbar">
+                  <div class="brand-logo">
+                    <span class="index">02</span> Runway — Native Android
+                  </div>
+                  <button type="button" class="btn-project-action">
+                    <span>View Project</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </nav>
+                <div class="hero-banner">
+                  <div class="overlay-gradient"></div>
+                  <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80"
+                    alt="Native Android"
+                  />
+                  <div class="showcase-project-details">
+                    <div class="showcase-project-tag">Android UI Ecosystem</div>
+                    <h2 class="hero-headline">
+                      Runway — Native<br />Android Design
+                    </h2>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project-frame next-in-line">
+                <nav class="frame-navbar">
+                  <div class="brand-logo">
+                    <span class="index">03</span> Runway — Fintech Case Study
+                  </div>
+                  <button type="button" class="btn-project-action">
+                    <span>View Project</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </nav>
+                <div class="hero-banner">
+                  <div class="overlay-gradient"></div>
+                  <img
+                    src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1600&q=80"
+                    alt="Fintech Case Study"
+                  />
+                  <div class="showcase-project-details">
+                    <div class="showcase-project-tag">Case Study</div>
+                    <h2 class="hero-headline">
+                      Turn Your Finances<br />Into Smarter Decisions
+                    </h2>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project-frame next-in-line">
+                <nav class="frame-navbar">
+                  <div class="brand-logo">
+                    <span class="index">04</span> Component System
+                  </div>
+                  <button type="button" class="btn-project-action">
+                    <span>View Project</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </nav>
+                <div class="hero-banner">
+                  <div class="overlay-gradient"></div>
+                  <img
+                    src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=1600&q=80"
+                    alt="Design Infrastructure"
+                  />
+                  <div class="showcase-project-details">
+                    <div class="showcase-project-tag">Design Primitives</div>
+                    <h2 class="hero-headline">
+                      Headless UI Design<br />System Library
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="ux-footer">
+      <div class="footer-glow" aria-hidden="true"></div>
+      <div class="footer-container">
+        <div class="footer-top">
+          <div class="cta-text">
+            <span class="status-badge">
+              <span class="status-dot" aria-hidden="true"></span> Available for
+              new projects
+            </span>
+            <h2 class="footer-heading">
+              Have a project in mind?<br />Let&rsquo;s collaborate.
+            </h2>
+          </div>
+          <a href="mailto:dhananjay.sagar@gmail.com" class="btn-footer-cta">
+            <span>Get in Touch</span>
+            <span class="cta-icon" aria-hidden="true">&#8599;</span>
+          </a>
+        </div>
+
+        <div class="footer-divider" aria-hidden="true"></div>
+
+        <div class="footer-middle">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              PORTFOLIO<span aria-hidden="true">.</span>
+            </div>
+            <p class="brand-sub">
+              Crafting high-impact digital products, design systems, and
+              seamless user experiences.
+            </p>
+          </div>
+
+          <nav class="footer-links-grid" aria-label="Footer">
+            <div class="link-column">
+              <h4>Navigation</h4>
+              <a href="#showcase">Selected Work</a>
+              <a href="#process">UX Process</a>
+              <a href="#tools">Design Arsenal</a>
+              <a
+                href="RESUMEFORPORTFOLIO.HTML"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Resume</a
+              >
+            </div>
+
+            <div class="link-column">
+              <h4>Socials</h4>
+              <a
+                href="https://linkedin.com/in/dhananjaysagar"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+                <span class="link-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+              <a
+                href="https://behance.net/dhanajayrajput"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Behance
+                <span class="link-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="copyright">
+            &copy; 2026 Designed &amp; Built with Precision. All rights
+            reserved.
+          </p>
+          <button type="button" class="btn-back-to-top" id="btn-back-to-top">
+            <span>Back to Top</span>
+            <span class="arrow" aria-hidden="true">&uarr;</span>
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Full case study overlay -->
+    <div class="case-study-page" id="case-study-page" aria-hidden="true">
+      <header class="case-study-header">
+        <button
+          type="button"
+          class="btn-floating-arrow"
+          id="btn-back"
+          title="Back to Showcase"
+          aria-label="Back to showcase"
+        >
+          ←
+        </button>
+        <p class="case-study-heading" id="case-study-heading">Case Study</p>
+      </header>
+      <div class="case-study-scroll" id="case-study-scroll">
+        <div class="case-study-content" id="case-study-content"></div>
+      </div>
     </div>
 
-    <!-- FLOATING BOTTOM RIGHT VERTICAL NAVIGATION DOCK -->
-    <div class="bottom-dock" id="bottomDock">
-      <a href="index.html" class="dock-item dock-accent-home" id="dockHomeBtn" title="Home" data-tooltip="Home">
-        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-      </a>
-      <a href="RESUMEFORPORTFOLIO.HTML" class="dock-item dock-accent-resume" id="dockResumeBtn" title="Resume" data-tooltip="Resume">
-        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><line x1="10" x2="8" y1="9" y2="9"></line></svg>
-      </a>
-      <a href="PROJECT.html" class="dock-item dock-accent-project" id="dockProjectsBtn" title="Projects" data-tooltip="Projects">
-        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-      </a>
-    </div>
-
-    <!-- MAIN JAVASCRIPT ANIMATION ENGINE -->
-    <script type="module" src="js/main.js"></script>
+    <script src="js/portfolio.js"></script>
+    <script type="module" src="js/tools.js"></script>
+    <script src="js/project-ui.js"></script>
   </body>
 </html>

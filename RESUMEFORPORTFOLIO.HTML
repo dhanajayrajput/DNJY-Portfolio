@@ -1,514 +1,955 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dhananjay Sagar - UI/UX & AI Product Designer</title>
-    <link rel="stylesheet" href="css/style.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
-        /* UNIVERSAL DARK THEME SYSTEM */
-        :root {
-            --bg-color: #0b0c10;
-            --card-bg: #151821;
-            --card-border: #262a36;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-primary: #6366f1; /* Electric Indigo */
-            --accent-secondary: #38bdf8; /* Sky Teal */
-            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
-            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
-            --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.25);
-        }
+      /* UNIVERSAL DARK THEME SYSTEM */
+      :root {
+        --bg-color: #0b0c10;
+        --card-bg: #151821;
+        --card-border: #262a36;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent-primary: #6366f1; /* Electric Indigo */
+        --accent-secondary: #38bdf8; /* Sky Teal */
+        --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+        --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+        --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.25);
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
 
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        background-image:
+          radial-gradient(
+            circle at 10% 20%,
+            rgba(99, 102, 241, 0.08),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(56, 189, 248, 0.08),
+            transparent 30%
+          );
+        color: var(--text-main);
+        padding: 50px clamp(20px, 8vw, 120px); /* 120px Desktop Padding */
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1400px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 2.2fr;
+        gap: 35px;
+        align-items: start;
+      }
+
+      .left-column,
+      .right-column {
+        min-width: 0;
+      }
+
+      /* STICKY LEFT COLUMN SETUP */
+      .left-column {
+        position: sticky;
+        top: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        padding-right: 8px; /* Smooth inner scroll space */
+      }
+
+      /* Custom Scrollbar for Sticky Left Panel */
+      .left-column::-webkit-scrollbar {
+        width: 5px;
+      }
+      .left-column::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .left-column::-webkit-scrollbar-thumb {
+        background: var(--card-border);
+        border-radius: 10px;
+      }
+      .left-column::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-primary);
+      }
+
+      /* 3D Glass Card Base */
+      .card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow:
+          var(--shadow-card),
+          inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        transform-style: preserve-3d;
+        transition:
+          transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+        position: relative;
+        z-index: 1;
+      }
+
+      .card:hover {
+        border-color: rgba(99, 102, 241, 0.5);
+        box-shadow: var(--shadow-card), var(--shadow-glow);
+        z-index: 10;
+      }
+
+      /* 3D Pop-out elements */
+      .pop-out {
+        transform: translateZ(30px);
+        transition: transform 0.3s ease;
+      }
+
+      .pop-out-high {
+        transform: translateZ(60px);
+        transition: transform 0.3s ease;
+      }
+
+      /* Typography */
+      h1 {
+        font-size: clamp(1.8rem, 2.5vw, 2.3rem);
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #fff;
+      }
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--accent-secondary);
+        margin-bottom: 4px;
+      }
+      h4 {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-main);
+        margin-bottom: 12px;
+      }
+
+      p {
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: 0.92rem;
+      }
+
+      /* Contact info pills */
+      .contact-info {
+        margin: 18px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.02);
+        padding: 8px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        transition: border-color 0.2s ease;
+      }
+      .contact-item:hover {
+        border-color: var(--accent-secondary);
+      }
+      .contact-item a {
+        color: var(--accent-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        overflow-wrap: anywhere;
+      }
+
+      .date-badge {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--accent-secondary);
+        background: rgba(56, 189, 248, 0.1);
+        padding: 4px 14px;
+        border-radius: 20px;
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+
+      /* Metrics Bar */
+      .metrics-bar {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid var(--card-border);
+      }
+      .metric-box {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 10px 6px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .metric-num {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--accent-secondary);
+      }
+      .metric-label {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+      }
+
+      /* Skills & Tags */
+      .skills-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .skill-category h4 {
+        color: var(--accent-secondary);
+        margin-bottom: 8px;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tag {
+        background: #1e2230;
+        color: var(--text-main);
+        padding: 5px 12px;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        border: 1px solid var(--card-border);
+        transition: all 0.2s ease;
+      }
+      .tag:hover {
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        transform: translateY(-2px);
+      }
+
+      /* Right Column Setup */
+      .right-column {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .section-heading {
+        padding: 10px 0;
+      }
+      .section-heading.is-projects {
+        padding: 20px 0 10px;
+      }
+      .section-title {
+        font-size: clamp(1.45rem, 4.5vw, 2rem);
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .projects-grid .card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .projects-grid .card .pop-out:last-child {
+        flex: 1;
+      }
+
+      .projects-grid .card p {
+        margin-bottom: 0;
+      }
+
+      /* STEPPER TIMELINE FOR EXPERIENCE */
+      .timeline-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        padding-left: 25px;
+      }
+      .timeline-container::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 20px;
+        bottom: 20px;
+        width: 2px;
+        background: linear-gradient(
+          180deg,
+          var(--accent-secondary) 0%,
+          var(--accent-primary) 100%
+        );
+        border-radius: 2px;
+      }
+
+      .timeline-card {
+        position: relative;
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: var(--shadow-card);
+        transform-style: preserve-3d;
+        transition:
+          transform 0.2s ease,
+          border-color 0.3s ease;
+      }
+      .timeline-card::before {
+        content: "";
+        position: absolute;
+        left: -32px;
+        top: 32px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent-primary);
+        border: 3px solid var(--bg-color);
+        box-shadow: 0 0 10px var(--accent-primary);
+        transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+      }
+      .timeline-card:hover::before {
+        transform: scale(1.3);
+        background: var(--accent-secondary);
+        box-shadow: 0 0 15px var(--accent-secondary);
+      }
+
+      ul {
+        margin-left: 18px;
+        color: var(--text-muted);
+        font-size: 0.93rem;
+        line-height: 1.6;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+
+      .gradient-text {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .btn-close-resume {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 100;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(21, 24, 33, 0.9);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--card-border);
+        color: var(--text-main);
+        text-decoration: none;
+        font-size: 1.4rem;
+        line-height: 1;
+        box-shadow: var(--shadow-card);
+        transition:
+          transform 0.25s ease,
+          background 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      .btn-close-resume:hover {
+        transform: scale(1.08);
+        background: #ffffff;
+        color: #0b0c10;
+        border-color: #ffffff;
+      }
+
+      /* Responsive Behavior */
+      @media (max-width: 1024px) {
         body {
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08), transparent 30%),
-                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.08), transparent 30%);
-            color: var(--text-main);
-            padding: 50px clamp(20px, 8vw, 120px); /* 120px Desktop Padding */
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
+          padding: 40px 20px;
+        }
+        .container {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .left-column {
+          position: relative;
+          top: 0;
+          max-height: none;
+          overflow-y: visible;
+          padding-right: 0;
+        }
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+        .btn-close-resume {
+          top: 16px;
+          right: 16px;
+          width: 48px;
+          height: 48px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 72px 18px 40px;
+          padding-left: max(18px, env(safe-area-inset-left, 0px));
+          padding-right: max(18px, env(safe-area-inset-right, 0px));
         }
 
         .container {
-            max-width: 1400px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 2.2fr;
-            gap: 35px;
-            align-items: start;
+          gap: 22px;
+        }
+        .left-column,
+        .right-column {
+          gap: 20px;
         }
 
-        /* STICKY LEFT COLUMN SETUP */
-        .left-column {
-            position: sticky;
-            top: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            max-height: calc(100vh - 80px);
-            overflow-y: auto;
-            padding-right: 8px; /* Smooth inner scroll space */
-        }
-
-        /* Custom Scrollbar for Sticky Left Panel */
-        .left-column::-webkit-scrollbar {
-            width: 5px;
-        }
-        .left-column::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .left-column::-webkit-scrollbar-thumb {
-            background: var(--card-border);
-            border-radius: 10px;
-        }
-        .left-column::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-primary);
-        }
-
-        /* 3D Glass Card Base */
         .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: var(--shadow-card), inset 0 1px 1px rgba(255,255,255,0.05);
-            transform-style: preserve-3d;
-            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            z-index: 1;
+          padding: 22px;
+          border-radius: 20px;
         }
-
-        .card:hover {
-            border-color: rgba(99, 102, 241, 0.5);
-            box-shadow: var(--shadow-card), var(--shadow-glow);
-            z-index: 10;
-        }
-
-        /* 3D Pop-out elements */
-        .pop-out {
-            transform: translateZ(30px);
-            transition: transform 0.3s ease;
-        }
-        
-        .pop-out-high {
-            transform: translateZ(60px);
-            transition: transform 0.3s ease;
-        }
-
-        /* Typography */
-        h1 { font-size: clamp(1.8rem, 2.5vw, 2.3rem); font-weight: 700; margin-bottom: 8px; color: #fff; }
-        h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 18px; color: #fff; display: flex; align-items: center; gap: 10px;}
-        h3 { font-size: 1.15rem; font-weight: 600; color: var(--accent-secondary); margin-bottom: 4px; }
-        h4 { font-size: 0.9rem; font-weight: 500; color: var(--text-main); margin-bottom: 12px; }
-        
-        p { color: var(--text-muted); line-height: 1.6; margin-bottom: 15px; font-size: 0.92rem; }
-        
-        /* Contact info pills */
-        .contact-info { margin: 18px 0; display: flex; flex-direction: column; gap: 10px; }
-        .contact-item { 
-            display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text-muted); 
-            background: rgba(255, 255, 255, 0.02); padding: 8px 12px; border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.03); transition: border-color 0.2s ease;
-        }
-        .contact-item:hover { border-color: var(--accent-secondary); }
-        .contact-item a { color: var(--accent-secondary); text-decoration: none; font-weight: 500; }
-
-        .date-badge {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-secondary);
-            background: rgba(56, 189, 248, 0.1);
-            padding: 4px 14px;
-            border-radius: 20px;
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-
-        /* Metrics Bar */
-        .metrics-bar {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid var(--card-border);
-        }
-        .metric-box {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 10px 6px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .metric-num {
-            font-size: 1.2rem; font-weight: 700; color: var(--accent-secondary);
-        }
-        .metric-label {
-            font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;
-        }
-
-        /* Skills & Tags */
-        .skills-grid { display: flex; flex-direction: column; gap: 16px; }
-        .skill-category h4 { color: var(--accent-secondary); margin-bottom: 8px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px; }
-        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag {
-            background: #1e2230;
-            color: var(--text-main);
-            padding: 5px 12px;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            font-weight: 500;
-            border: 1px solid var(--card-border);
-            transition: all 0.2s ease;
-        }
-        .tag:hover {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Right Column Setup */
-        .right-column { display: flex; flex-direction: column; gap: 30px; }
-
-        /* STEPPER TIMELINE FOR EXPERIENCE */
-        .timeline-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            padding-left: 25px;
-        }
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 20px;
-            bottom: 20px;
-            width: 2px;
-            background: linear-gradient(180deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
-            border-radius: 2px;
-        }
-
         .timeline-card {
-            position: relative;
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 28px;
-            box-shadow: var(--shadow-card);
-            transform-style: preserve-3d;
-            transition: transform 0.2s ease, border-color 0.3s ease;
+          padding: 22px;
+          border-radius: 18px;
+        }
+
+        h2 {
+          font-size: 1.2rem;
+          margin-bottom: 14px;
+        }
+        h3 {
+          font-size: 1.05rem;
+        }
+        p {
+          font-size: 0.9rem;
+        }
+        ul {
+          font-size: 0.9rem;
+          margin-left: 16px;
+        }
+
+        .timeline-container {
+          padding-left: 20px;
+          gap: 20px;
         }
         .timeline-card::before {
-            content: '';
-            position: absolute;
-            left: -32px;
-            top: 32px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            border: 3px solid var(--bg-color);
-            box-shadow: 0 0 10px var(--accent-primary);
-            transition: transform 0.3s ease, background 0.3s ease;
+          left: -26px;
+          top: 28px;
+          width: 10px;
+          height: 10px;
+        }
+
+        .section-heading {
+          padding: 4px 0;
+        }
+        .section-heading.is-projects {
+          padding: 12px 0 4px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 68px 14px 32px;
+        }
+
+        .container {
+          gap: 18px;
+        }
+        .card {
+          padding: 18px;
+          border-radius: 18px;
+        }
+        .timeline-card {
+          padding: 18px;
+          border-radius: 16px;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+        }
+        h2 {
+          font-size: 1.1rem;
+        }
+        h3 {
+          font-size: 1rem;
+        }
+        h4 {
+          font-size: 0.85rem;
+        }
+        p,
+        ul {
+          font-size: 0.88rem;
+        }
+
+        .contact-item {
+          font-size: 0.82rem;
+          padding: 8px 10px;
+          align-items: flex-start;
+        }
+        .metrics-bar {
+          gap: 8px;
+        }
+        .metric-box {
+          padding: 8px 4px;
+        }
+        .metric-num {
+          font-size: 1.05rem;
+        }
+        .metric-label {
+          font-size: 0.62rem;
+          letter-spacing: 0.2px;
+        }
+
+        .tag {
+          font-size: 0.76rem;
+          padding: 5px 10px;
+        }
+        .skills-grid {
+          gap: 14px;
+        }
+
+        .timeline-container {
+          padding-left: 16px;
+        }
+        .timeline-card::before {
+          left: -21px;
+          top: 24px;
+        }
+
+        .btn-close-resume {
+          top: 12px;
+          right: 12px;
+          width: 42px;
+          height: 42px;
+          font-size: 1.2rem;
+        }
+      }
+
+      @media (max-width: 400px) {
+        body {
+          padding: 64px 12px 28px;
+        }
+        .card,
+        .timeline-card {
+          padding: 16px;
+        }
+        h1 {
+          font-size: 1.4rem;
+        }
+        .metrics-bar {
+          grid-template-columns: 1fr 1fr;
+        }
+        .metrics-bar .metric-box:last-child {
+          grid-column: span 2;
+        }
+      }
+
+      /* Neutralize hover-only affordances on touch devices */
+      @media (hover: none) {
+        .card:hover {
+          border-color: var(--card-border);
+          box-shadow:
+            var(--shadow-card),
+            inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+        .contact-item:hover {
+          border-color: rgba(255, 255, 255, 0.03);
+        }
+        .tag:hover {
+          transform: none;
+          box-shadow: none;
+          border-color: var(--card-border);
         }
         .timeline-card:hover::before {
-            transform: scale(1.3);
-            background: var(--accent-secondary);
-            box-shadow: 0 0 15px var(--accent-secondary);
+          transform: none;
+          background: var(--accent-primary);
+          box-shadow: 0 0 10px var(--accent-primary);
         }
-
-        ul { margin-left: 18px; color: var(--text-muted); font-size: 0.93rem; line-height: 1.6; }
-        li { margin-bottom: 8px; }
-
-        .gradient-text {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .btn-close-resume:hover {
+          transform: none;
+          background: rgba(21, 24, 33, 0.9);
+          color: var(--text-main);
+          border-color: var(--card-border);
         }
+      }
 
-        /* Responsive Behavior */
-        @media (max-width: 1024px) {
-            body { padding: 40px 20px; }
-            .container { grid-template-columns: 1fr; }
-            .left-column { position: relative; top: 0; max-height: none; overflow-y: visible; padding-right: 0; }
+      @media print {
+        body {
+          padding: 0;
+          background: #fff;
+          color: #000;
         }
+        .btn-close-resume {
+          display: none;
+        }
+      }
     </style>
-</head>
-<body>
-    <!-- CURSOR -->
-    <div id="customCursor" class="custom-cursor"></div>
+  </head>
+  <body>
+    <a
+      href="index.html"
+      class="btn-close-resume"
+      title="Back to website"
+      aria-label="Close resume and return to website"
+      >×</a
+    >
 
     <div class="container">
-        
-        <!-- LEFT COLUMN (STICKY): Profile, Metrics, Skills, Education -->
-        <div class="left-column">
-            
-            <!-- Profile Card -->
-            <div class="card" data-tilt>
-                <div class="pop-out-high">
-                    <h1>Dhananjay Sagar</h1>
-                    <h3 class="gradient-text">UI/UX & AI-Driven Product Design</h3>
-                </div>
-                
-                <div class="contact-info pop-out">
-                    <div class="contact-item">📍 Jabalpur, MP, India</div>
-                    <div class="contact-item">📞 +91 7489455607</div>
-                    <div class="contact-item">✉️ dhananjay.sagar@gmail.com</div>
-                    <div class="contact-item">🔗 <a href="https://linkedin.com/in/dhananjaysagar" target="_blank">linkedin.com/in/dhananjaysagar</a></div>
-                    <div class="contact-item">🎨 <a href="https://behance.net/dhanajayrajput" target="_blank">behance.net/dhanajayrajput</a></div>
-                </div>
+      <!-- LEFT COLUMN (STICKY): Profile, Metrics, Skills, Education -->
+      <div class="left-column">
+        <!-- Profile Card -->
+        <div class="card" data-tilt>
+          <div class="pop-out-high">
+            <h1>Dhananjay Sagar</h1>
+            <h3 class="gradient-text">UI/UX & AI-Driven Product Design</h3>
+          </div>
 
-                <div class="pop-out">
-                    <h2>Summary</h2>
-                    <p>UI/UX and Visual Designer with 4 years of experience creating user-centric products across fintech, SaaS, HRMS, ERP, CRM, AI products, and government platforms.</p>
-                </div>
-
-                <!-- Glassmorphism Highlight Metrics -->
-                <div class="metrics-bar pop-out">
-                    <div class="metric-box">
-                        <div class="metric-num">4+</div>
-                        <div class="metric-label">Years Exp</div>
-                    </div>
-                    <div class="metric-box">
-                        <div class="metric-num">7+</div>
-                        <div class="metric-label">Enterprise Apps</div>
-                    </div>
-                    <div class="metric-box">
-                        <div class="metric-num">80%</div>
-                        <div class="metric-label">UI Consistency</div>
-                    </div>
-                </div>
+          <div class="contact-info pop-out">
+            <div class="contact-item">📍 Jabalpur, MP, India</div>
+            <div class="contact-item">📞 +91 7489455607</div>
+            <div class="contact-item">✉️ dhananjay.sagar@gmail.com</div>
+            <div class="contact-item">
+              🔗
+              <a href="https://linkedin.com/in/dhananjaysagar" target="_blank"
+                >linkedin.com/in/dhananjaysagar</a
+              >
             </div>
-
-            <!-- Core Skills Card -->
-            <div class="card" data-tilt>
-                <h2 class="pop-out-high">Core Skills & Tools</h2>
-                <div class="skills-grid pop-out">
-                    <div class="skill-category">
-                        <h4>Design Tools</h4>
-                        <div class="tags">
-                            <span class="tag">Figma</span><span class="tag">Adobe XD</span><span class="tag">Photoshop</span>
-                            <span class="tag">Illustrator</span><span class="tag">InDesign</span><span class="tag">Sketch</span><span class="tag">Spline</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h4>AI-Integrated Product Design</h4>
-                        <div class="tags">
-                            <span class="tag">Chatbot UX</span><span class="tag">Broadcast Messaging</span>
-                            <span class="tag">AI Doc Parsing</span><span class="tag">Human-in-the-loop UX</span>
-                            <span class="tag">AI State Indicators</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Visual Design & UX Strategy</h4>
-                        <div class="tags">
-                            <span class="tag">Design Systems</span><span class="tag">Typography</span><span class="tag">WCAG</span>
-                            <span class="tag">Interaction Design</span><span class="tag">User Research</span><span class="tag">Wireframing</span>
-                            <span class="tag">Journey Mapping</span><span class="tag">Heuristic Evaluation</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="contact-item">
+              🎨
+              <a href="https://behance.net/dhanajayrajput" target="_blank"
+                >behance.net/dhanajayrajput</a
+              >
             </div>
+          </div>
 
-            <!-- Education Card -->
-            <div class="card" data-tilt>
-                <h2 class="pop-out-high">Education</h2>
-                <div class="pop-out" style="margin-bottom: 15px;">
-                    <h3>B.Com (Computer Applications)</h3>
-                    <h4>Lal Bahadur Shastri College, Harda, MP</h4>
-                    <span class="date-badge">2021</span>
-                </div>
-                <div class="pop-out">
-                    <h3>12th Higher Secondary</h3>
-                    <h4>Krishna Convent H.S. School, Gahal</h4>
-                    <span class="date-badge">2019</span>
-                </div>
+          <div class="pop-out">
+            <h2>Summary</h2>
+            <p>
+              UI/UX and Visual Designer with 4 years of experience creating
+              user-centric products across fintech, SaaS, HRMS, ERP, CRM, AI
+              products, and government platforms.
+            </p>
+          </div>
+
+          <!-- Glassmorphism Highlight Metrics -->
+          <div class="metrics-bar pop-out">
+            <div class="metric-box">
+              <div class="metric-num">4+</div>
+              <div class="metric-label">Years Exp</div>
             </div>
-
+            <div class="metric-box">
+              <div class="metric-num">7+</div>
+              <div class="metric-label">Enterprise Apps</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-num">80%</div>
+              <div class="metric-label">UI Consistency</div>
+            </div>
+          </div>
         </div>
 
-        <!-- RIGHT COLUMN: Scrollable Experience Timeline & Projects -->
-        <div class="right-column">
-            
-            <div style="padding: 10px 0;">
-                <h2 style="font-size: 2rem;" class="gradient-text">Professional Experience</h2>
+        <!-- Core Skills Card -->
+        <div class="card" data-tilt>
+          <h2 class="pop-out-high">Core Skills & Tools</h2>
+          <div class="skills-grid pop-out">
+            <div class="skill-category">
+              <h4>Design Tools</h4>
+              <div class="tags">
+                <span class="tag">Figma</span><span class="tag">Adobe XD</span
+                ><span class="tag">Photoshop</span>
+                <span class="tag">Illustrator</span
+                ><span class="tag">InDesign</span><span class="tag">Sketch</span
+                ><span class="tag">Spline</span>
+              </div>
             </div>
-
-            <!-- STEPPER CONNECTOR TIMELINE -->
-            <div class="timeline-container">
-                
-                <!-- Experience Item 1 -->
-                <div class="timeline-card card" data-tilt>
-                    <div class="pop-out-high">
-                        <h3>UI/UX and Visual Designer</h3>
-                        <h4>High Tech Info system • Jabalpur, MP</h4>
-                        <span class="date-badge">Dec 2025 - Present</span>
-                    </div>
-                    <div class="pop-out">
-                        <ul>
-                            <li>Spearheaded UX and interface design for a CPaaS platform, defining color systems, typography, and component layouts for multi-channel workflows.</li>
-                            <li>Simplified conversational agent flows using consistent iconography and color-coded states, cutting user confusion by 35% and raising task completion by 20%.</li>
-                            <li>Delivered pixel-perfect prototypes for a Telecalling Platform and AI Resume Parser, coordinating handoff with 5 engineers in Agile sprints.</li>
-                            <li>Pitched 10+ interface concepts to stakeholders, refined through 3 rounds of feedback.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Experience Item 2 -->
-                <div class="timeline-card card" data-tilt>
-                    <div class="pop-out-high">
-                        <h3>UI/UX and Visual Designer</h3>
-                        <h4>Fin Coopers Tech India Pvt. Ltd • Indore, MP</h4>
-                        <span class="date-badge">May 2024 - Nov 2025</span>
-                    </div>
-                    <div class="pop-out">
-                        <ul>
-                            <li>Owned interface design for 7 enterprise products (HRMS, ERP, CRM, Finance, LMS, LOS, AI Doc), unifying brand language.</li>
-                            <li>Amplified UI consistency by 80% and cut handoff time by 40% by rolling out a scalable, component-based design system.</li>
-                            <li>Architected Docexe Document Management Platform with responsive web/mobile layouts and rigorous typography hierarchy.</li>
-                            <li>Conducted competitive research shaping 3 major product redesigns. Coached 3 junior designers.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Experience Item 3 -->
-                <div class="timeline-card card" data-tilt>
-                    <div class="pop-out-high">
-                        <h3>UI/UX and Visual Designer</h3>
-                        <h4>Coder Farm Pvt. Ltd • Indore, MP</h4>
-                        <span class="date-badge">Mar 2023 - May 2024</span>
-                    </div>
-                    <div class="pop-out">
-                        <ul>
-                            <li>Crafted end-to-end UI/UX and brand identity for a hiring portal, shipping 10 web/mobile products with a shared component library (cut production time by 25%).</li>
-                            <li>Built Solar System Gov. platform (500+ users) and a TEDx coordination tool (200 attendees).</li>
-                            <li>Partnered with clients for requirement gathering, facilitating design reviews with 100% on-time delivery rate.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Experience Item 4 -->
-                <div class="timeline-card card" data-tilt>
-                    <div class="pop-out-high">
-                        <h3>UI/UX Intern & Graphic Designer</h3>
-                        <h4>Coder Farm Pvt. Ltd • Indore, MP</h4>
-                        <span class="date-badge">Oct 2022 - Mar 2023</span>
-                    </div>
-                    <div class="pop-out">
-                        <ul>
-                            <li>Produced wireframes, user flows, and graphic assets for 5 sprint cycles, gaining hands-on Agile experience.</li>
-                            <li>Strengthened foundations in user-centered design, critique processes, and cross-functional teamwork.</li>
-                        </ul>
-                    </div>
-                </div>
-
+            <div class="skill-category">
+              <h4>AI-Integrated Product Design</h4>
+              <div class="tags">
+                <span class="tag">Chatbot UX</span
+                ><span class="tag">Broadcast Messaging</span>
+                <span class="tag">AI Doc Parsing</span
+                ><span class="tag">Human-in-the-loop UX</span>
+                <span class="tag">AI State Indicators</span>
+              </div>
             </div>
-
-            <!-- Key Projects Section -->
-            <div style="padding: 20px 0 10px 0;">
-                <h2 style="font-size: 2rem;" class="gradient-text">Key Projects</h2>
+            <div class="skill-category">
+              <h4>Visual Design & UX Strategy</h4>
+              <div class="tags">
+                <span class="tag">Design Systems</span
+                ><span class="tag">Typography</span
+                ><span class="tag">WCAG</span>
+                <span class="tag">Interaction Design</span
+                ><span class="tag">User Research</span
+                ><span class="tag">Wireframing</span>
+                <span class="tag">Journey Mapping</span
+                ><span class="tag">Heuristic Evaluation</span>
+              </div>
             </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-                
-                <!-- Project 1 -->
-                <div class="card" data-tilt>
-                    <div class="pop-out-high">
-                        <h3>AI-Powered Resume Parser</h3>
-                    </div>
-                    <div class="pop-out">
-                        <p>Designed the end-to-end experience for an AI resume-parsing tool, including intelligent field extraction review, confidence/state indicators, and human-in-the-loop correction flows. Reduced recruiter screening time and improved parsing accuracy through clearer visual feedback.</p>
-                    </div>
-                </div>
-
-                <!-- Project 2 -->
-                <div class="card" data-tilt>
-                    <div class="pop-out-high">
-                        <h3>Conversational Agent / Chatbot UX</h3>
-                    </div>
-                    <div class="pop-out">
-                        <p>Designed the end-to-end UX for a conversational AI agent builder, covering flow-creation screens, intent/response mapping, and color-coded conversation states. Simplified complex chatbot logic into clear, intuitive layouts, cutting user confusion by 35% and raising task completion by 20%.</p>
-                    </div>
-                </div>
-
-            </div>
-
+          </div>
         </div>
+
+        <!-- Education Card -->
+        <div class="card" data-tilt>
+          <h2 class="pop-out-high">Education</h2>
+          <div class="pop-out" style="margin-bottom: 15px">
+            <h3>B.Com (Computer Applications)</h3>
+            <h4>Lal Bahadur Shastri College, Harda, MP</h4>
+            <span class="date-badge">2021</span>
+          </div>
+          <div class="pop-out">
+            <h3>12th Higher Secondary</h3>
+            <h4>Krishna Convent H.S. School, Gahal</h4>
+            <span class="date-badge">2019</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Scrollable Experience Timeline & Projects -->
+      <div class="right-column">
+        <div class="section-heading">
+          <h2 class="section-title gradient-text">Professional Experience</h2>
+        </div>
+
+        <!-- STEPPER CONNECTOR TIMELINE -->
+        <div class="timeline-container">
+          <!-- Experience Item 1 -->
+          <div class="timeline-card card" data-tilt>
+            <div class="pop-out-high">
+              <h3>UI/UX and Visual Designer</h3>
+              <h4>High Tech Info system • Jabalpur, MP</h4>
+              <span class="date-badge">Dec 2025 - Present</span>
+            </div>
+            <div class="pop-out">
+              <ul>
+                <li>
+                  Spearheaded UX and interface design for a CPaaS platform,
+                  defining color systems, typography, and component layouts for
+                  multi-channel workflows.
+                </li>
+                <li>
+                  Simplified conversational agent flows using consistent
+                  iconography and color-coded states, cutting user confusion by
+                  35% and raising task completion by 20%.
+                </li>
+                <li>
+                  Delivered pixel-perfect prototypes for a Telecalling Platform
+                  and AI Resume Parser, coordinating handoff with 5 engineers in
+                  Agile sprints.
+                </li>
+                <li>
+                  Pitched 10+ interface concepts to stakeholders, refined
+                  through 3 rounds of feedback.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Experience Item 2 -->
+          <div class="timeline-card card" data-tilt>
+            <div class="pop-out-high">
+              <h3>UI/UX and Visual Designer</h3>
+              <h4>Fin Coopers Tech India Pvt. Ltd • Indore, MP</h4>
+              <span class="date-badge">May 2024 - Nov 2025</span>
+            </div>
+            <div class="pop-out">
+              <ul>
+                <li>
+                  Owned interface design for 7 enterprise products (HRMS, ERP,
+                  CRM, Finance, LMS, LOS, AI Doc), unifying brand language.
+                </li>
+                <li>
+                  Amplified UI consistency by 80% and cut handoff time by 40% by
+                  rolling out a scalable, component-based design system.
+                </li>
+                <li>
+                  Architected Docexe Document Management Platform with
+                  responsive web/mobile layouts and rigorous typography
+                  hierarchy.
+                </li>
+                <li>
+                  Conducted competitive research shaping 3 major product
+                  redesigns. Coached 3 junior designers.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Experience Item 3 -->
+          <div class="timeline-card card" data-tilt>
+            <div class="pop-out-high">
+              <h3>UI/UX and Visual Designer</h3>
+              <h4>Coder Farm Pvt. Ltd • Indore, MP</h4>
+              <span class="date-badge">Mar 2023 - May 2024</span>
+            </div>
+            <div class="pop-out">
+              <ul>
+                <li>
+                  Crafted end-to-end UI/UX and brand identity for a hiring
+                  portal, shipping 10 web/mobile products with a shared
+                  component library (cut production time by 25%).
+                </li>
+                <li>
+                  Built Solar System Gov. platform (500+ users) and a TEDx
+                  coordination tool (200 attendees).
+                </li>
+                <li>
+                  Partnered with clients for requirement gathering, facilitating
+                  design reviews with 100% on-time delivery rate.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Experience Item 4 -->
+          <div class="timeline-card card" data-tilt>
+            <div class="pop-out-high">
+              <h3>UI/UX Intern & Graphic Designer</h3>
+              <h4>Coder Farm Pvt. Ltd • Indore, MP</h4>
+              <span class="date-badge">Oct 2022 - Mar 2023</span>
+            </div>
+            <div class="pop-out">
+              <ul>
+                <li>
+                  Produced wireframes, user flows, and graphic assets for 5
+                  sprint cycles, gaining hands-on Agile experience.
+                </li>
+                <li>
+                  Strengthened foundations in user-centered design, critique
+                  processes, and cross-functional teamwork.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Projects Section -->
+        <div class="section-heading is-projects">
+          <h2 class="section-title gradient-text">Key Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <div class="card" data-tilt>
+            <div class="pop-out-high">
+              <h3>AI-Powered Resume Parser</h3>
+            </div>
+            <div class="pop-out">
+              <p>
+                Designed the end-to-end experience for an AI resume-parsing
+                tool, including intelligent field extraction review,
+                confidence/state indicators, and human-in-the-loop correction
+                flows. Reduced recruiter screening time and improved parsing
+                accuracy through clearer visual feedback.
+              </p>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="card" data-tilt>
+            <div class="pop-out-high">
+              <h3>Conversational Agent / Chatbot UX</h3>
+            </div>
+            <div class="pop-out">
+              <p>
+                Designed the end-to-end UX for a conversational AI agent
+                builder, covering flow-creation screens, intent/response
+                mapping, and color-coded conversation states. Simplified complex
+                chatbot logic into clear, intuitive layouts, cutting user
+                confusion by 35% and raising task completion by 20%.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
-        // Smooth 3D Tilt Effect
-        const cards = document.querySelectorAll('.card');
+      // Smooth 3D Tilt Effect (pointer devices only)
+      const cards = document.querySelectorAll(".card");
+      const tiltQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                if (!card.hasAttribute('data-tilt')) return;
+      function resetTilt() {
+        cards.forEach((card) => {
+          card.style.transform = "";
+        });
+      }
 
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / centerY) * -10; 
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
-            });
+      tiltQuery.addEventListener("change", resetTilt);
 
-            card.addEventListener('mouseleave', () => {
-                if (!card.hasAttribute('data-tilt')) return;
-                card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-            });
+      cards.forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          if (!card.hasAttribute("data-tilt") || !tiltQuery.matches) return;
+
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = ((y - centerY) / centerY) * -10;
+          const rotateY = ((x - centerX) / centerX) * 10;
+
+          card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
         });
 
-        // CUSTOM BUBBLE CURSOR TRACKER
-        const customCursor = document.getElementById("customCursor");
-        if (customCursor) {
-            window.addEventListener("mousemove", (e) => {
-                customCursor.style.left = `${e.clientX}px`;
-                customCursor.style.top = `${e.clientY}px`;
-            });
-            document.addEventListener("mousedown", () => customCursor.classList.add("active-click"));
-            document.addEventListener("mouseup", () => customCursor.classList.remove("active-click"));
-            document.body.addEventListener("mouseover", (e) => {
-                if (e.target.closest("a, button, input, select, textarea, .dock-item, .card")) {
-                    customCursor.classList.add("hover-state");
-                }
-            });
-            document.body.addEventListener("mouseout", (e) => {
-                if (e.target.closest("a, button, input, select, textarea, .dock-item, .card")) {
-                    customCursor.classList.remove("hover-state");
-                }
-            });
-        }
+        card.addEventListener("mouseleave", () => {
+          if (!card.hasAttribute("data-tilt")) return;
+          card.style.transform =
+            "perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+        });
+      });
     </script>
-    <!-- FLOATING BOTTOM RIGHT VERTICAL NAVIGATION DOCK -->
-    <div class="bottom-dock" id="bottomDock">
-      <a href="index.html" class="dock-item dock-accent-home" title="Home" data-tooltip="Home">
-        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-      </a>
-      <a href="RESUMEFORPORTFOLIO.HTML" class="dock-item dock-accent-resume active" title="Resume" data-tooltip="Resume">
-        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><line x1="10" x2="8" y1="9" y2="9"></line></svg>
-      </a>
-      <a href="PROJECT.html" class="dock-item dock-accent-project" title="Projects" data-tooltip="Projects">
-        <svg class="dock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-      </a>
-    </div>
-</body>
+  </body>
 </html>
