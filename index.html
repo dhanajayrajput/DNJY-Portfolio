@@ -1,335 +1,434 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dhananjay Sagar - UI/UX Designer</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dhananjay Sagar - UI/UX Designer</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <!-- Cursor & particle canvases -->
+    <div id="customCursor" class="custom-cursor" aria-hidden="true"></div>
+    <canvas id="bgCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+    <canvas id="trailCanvas" class="trail-canvas" aria-hidden="true"></canvas>
 
-  <!-- Cursor & particle canvases -->
-  <div id="customCursor" class="custom-cursor" aria-hidden="true"></div>
-  <canvas id="bgCanvas" class="bg-canvas" aria-hidden="true"></canvas>
-  <canvas id="trailCanvas" class="trail-canvas" aria-hidden="true"></canvas>
+    <!-- Navbar -->
+    <nav class="site-nav" aria-label="Primary">
+      <div class="nav-profile">
+        <img
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&fit=crop"
+          alt="Dhananjay"
+        />
+        Available for work <span class="dot" aria-hidden="true"></span>
+      </div>
+    </nav>
 
-  <!-- Navbar -->
-  <nav class="site-nav" aria-label="Primary">
-    <div class="nav-profile">
-      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&fit=crop" alt="Dhananjay">
-      Available for work <span class="dot" aria-hidden="true"></span>
+    <!-- Corner actions -->
+    <div class="corner-actions" aria-label="Quick links">
+      <a
+        href="#showcase"
+        class="corner-btn"
+        title="Projects"
+        aria-label="Go to projects"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+        </svg>
+      </a>
+      <a
+        href="RESUMEFORPORTFOLIO.HTML"
+        class="corner-btn"
+        title="Resume"
+        aria-label="Open resume"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          ></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="8" y1="13" x2="16" y2="13"></line>
+          <line x1="8" y1="17" x2="16" y2="17"></line>
+          <line x1="8" y1="9" x2="10" y2="9"></line>
+        </svg>
+      </a>
     </div>
-  </nav>
 
-  <!-- Corner actions -->
-  <div class="corner-actions" aria-label="Quick links">
-    <a href="#showcase" class="corner-btn" title="Projects" aria-label="Go to projects">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="3" y="3" width="7" height="7" rx="1"></rect>
-        <rect x="14" y="3" width="7" height="7" rx="1"></rect>
-        <rect x="3" y="14" width="7" height="7" rx="1"></rect>
-        <rect x="14" y="14" width="7" height="7" rx="1"></rect>
-      </svg>
-    </a>
-    <a href="RESUMEFORPORTFOLIO.HTML" class="corner-btn" title="Resume" aria-label="Open resume" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <line x1="8" y1="13" x2="16" y2="13"></line>
-        <line x1="8" y1="17" x2="16" y2="17"></line>
-        <line x1="8" y1="9" x2="10" y2="9"></line>
-      </svg>
-    </a>
-  </div>
-
-  <!-- Global 3D floating card (morphs into project card) -->
-  <div class="sticky-visual-container" aria-hidden="true">
-    <div class="card-wrapper" id="cardWrapper">
-      <div class="card-3d" id="card3D">
-        <div class="card-face card-front">
-          <img id="faceA-img" src="" alt="">
-          <div id="projectUI" class="project-ui">
-            <div class="inner-shadow"></div>
-            <div class="project-content">
-              <h2 class="project-title">Evaluating Error &amp; Confirmation Models</h2>
-              <p class="project-desc">
-                A deep dive into analyzing user experience gaps to design highly effective,
-                frictionless feedback loops for digital products.
-              </p>
+    <!-- Global 3D floating card (morphs into project card) -->
+    <div class="sticky-visual-container" aria-hidden="true">
+      <div class="card-wrapper" id="cardWrapper">
+        <div class="card-3d" id="card3D">
+          <div class="card-face card-front">
+            <img id="faceA-img" src="" alt="" />
+            <div id="projectUI" class="project-ui">
+              <div class="inner-shadow"></div>
+              <div class="project-content">
+                <h2 class="project-title">
+                  Evaluating Error &amp; Confirmation Models
+                </h2>
+                <p class="project-desc">
+                  A deep dive into analyzing user experience gaps to design
+                  highly effective, frictionless feedback loops for digital
+                  products.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card-face card-back">
-          <img id="faceB-img" src="" alt="">
+          <div class="card-face card-back">
+            <img id="faceB-img" src="" alt="" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Page sections -->
-  <main id="scrollTrack">
+    <!-- Page sections -->
+    <main id="scrollTrack">
+      <!-- 1. Hero -->
+      <section class="hero-section" id="home" aria-label="Hero">
+        <div class="hero-left">
+          <p class="subtitle">Dhananjay Sagar</p>
+          <h1 class="huge-text">UI/UX</h1>
+        </div>
+        <div class="hero-right">
+          <h1 class="huge-text">Designer</h1>
+          <p class="desc">Product Designer<br />Living in Pune</p>
+        </div>
+      </section>
 
-    <!-- 1. Hero -->
-    <section class="hero-section" id="home" aria-label="Hero">
-      <div class="hero-left">
-        <p class="subtitle">Dhananjay Sagar</p>
-        <h1 class="huge-text">UI/UX</h1>
-      </div>
-      <div class="hero-right">
-        <h1 class="huge-text">Designer</h1>
-        <p class="desc">Product Designer<br>Living in Pune</p>
-      </div>
-    </section>
+      <!-- 2. Process -->
+      <section
+        class="process-scroll-container"
+        id="process"
+        aria-label="Design process"
+      >
+        <div class="process-sticky">
+          <div class="process-content-left">
+            <h2 class="section-title">My Process</h2>
 
-    <!-- 2. Process -->
-    <section class="process-scroll-container" id="process" aria-label="Design process">
-      <div class="process-sticky">
-        <div class="process-content-left">
-          <h2 class="section-title">My Process</h2>
+            <div class="process-list">
+              <article class="process-item" data-step="0">
+                <div class="process-header">
+                  <span class="process-title">1. Empathize</span>
+                  <span class="process-subtitle"
+                    >Research &amp; Understand Users</span
+                  >
+                </div>
+                <div class="process-body">
+                  Conduct stakeholder interviews, user interviews, empathy
+                  mapping, surveys and contextual inquiry.
+                </div>
+              </article>
 
-          <div class="process-list">
-            <article class="process-item" data-step="0">
-              <div class="process-header">
-                <span class="process-title">1. Empathize</span>
-                <span class="process-subtitle">Research &amp; Understand Users</span>
-              </div>
-              <div class="process-body">
-                Conduct stakeholder interviews, user interviews, empathy mapping,
-                surveys and contextual inquiry.
-              </div>
-            </article>
+              <article class="process-item" data-step="1">
+                <div class="process-header">
+                  <span class="process-title">2. Define</span>
+                  <span class="process-subtitle">Problem Definition</span>
+                </div>
+                <div class="process-body">
+                  Analyze user experience gaps and define clear user problems to
+                  guide product development.
+                </div>
+              </article>
 
-            <article class="process-item" data-step="1">
-              <div class="process-header">
-                <span class="process-title">2. Define</span>
-                <span class="process-subtitle">Problem Definition</span>
-              </div>
-              <div class="process-body">
-                Analyze user experience gaps and define clear user problems
-                to guide product development.
-              </div>
-            </article>
+              <article class="process-item" data-step="2">
+                <div class="process-header">
+                  <span class="process-title">3. Ideate</span>
+                  <span class="process-subtitle">Generate Solutions</span>
+                </div>
+                <div class="process-body">
+                  Brainstorm effective solutions, including designing robust
+                  error and confirmation models.
+                </div>
+              </article>
 
-            <article class="process-item" data-step="2">
-              <div class="process-header">
-                <span class="process-title">3. Ideate</span>
-                <span class="process-subtitle">Generate Solutions</span>
-              </div>
-              <div class="process-body">
-                Brainstorm effective solutions, including designing robust
-                error and confirmation models.
-              </div>
-            </article>
+              <article class="process-item" data-step="3">
+                <div class="process-header">
+                  <span class="process-title">4. Prototype</span>
+                  <span class="process-subtitle">Build &amp; Validate</span>
+                </div>
+                <div class="process-body">
+                  Create low to high-fidelity wireframes and interactive
+                  prototypes.
+                </div>
+              </article>
 
-            <article class="process-item" data-step="3">
-              <div class="process-header">
-                <span class="process-title">4. Prototype</span>
-                <span class="process-subtitle">Build &amp; Validate</span>
-              </div>
-              <div class="process-body">
-                Create low to high-fidelity wireframes and interactive prototypes.
-              </div>
-            </article>
-
-            <article class="process-item" data-step="4">
-              <div class="process-header">
-                <span class="process-title">5. Test</span>
-                <span class="process-subtitle">Improve Experience</span>
-              </div>
-              <div class="process-body">
-                Conduct usability testing sessions to validate solutions with real users.
-              </div>
-            </article>
+              <article class="process-item" data-step="4">
+                <div class="process-header">
+                  <span class="process-title">5. Test</span>
+                  <span class="process-subtitle">Improve Experience</span>
+                </div>
+                <div class="process-body">
+                  Conduct usability testing sessions to validate solutions with
+                  real users.
+                </div>
+              </article>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 3. Design arsenal -->
-    <section class="tools-section" id="tools" aria-label="Design tools">
-      <div id="canvas-container">
-        <div class="tools-header">Design Arsenal</div>
-        <div class="tools-instruction">Drag the cubes to bump them</div>
-      </div>
-    </section>
-
-    <!-- 4. Project showcase -->
-    <section class="showcase-section" id="showcase" aria-label="Project showcase">
-      <div class="showcase-sticky">
-        <div class="section-indicator" id="showcase-indicator">
-          <div class="showcase-dot active"></div>
-          <div class="showcase-dot"></div>
-          <div class="showcase-dot"></div>
-          <div class="showcase-dot"></div>
+      <!-- 3. Design arsenal -->
+      <section class="tools-section" id="tools" aria-label="Design tools">
+        <div id="canvas-container">
+          <div class="tools-header">Design Arsenal</div>
+          <div class="tools-instruction">Drag the cubes to bump them</div>
         </div>
+      </section>
 
-        <div class="showcase-wrapper" id="showcase-wrapper">
-          <div class="project-stack" id="project-stack">
+      <!-- 4. Project showcase -->
+      <section
+        class="showcase-section"
+        id="showcase"
+        aria-label="Project showcase"
+      >
+        <div class="showcase-sticky">
+          <div class="section-indicator" id="showcase-indicator">
+            <div class="showcase-dot active"></div>
+            <div class="showcase-dot"></div>
+            <div class="showcase-dot"></div>
+            <div class="showcase-dot"></div>
+          </div>
 
-            <div class="project-frame active">
-              <nav class="frame-navbar">
-                <div class="brand-logo">
-                  <span class="index">01</span> Runway — Native iOS
+          <div class="showcase-wrapper" id="showcase-wrapper">
+            <div class="project-stack" id="project-stack">
+              <div class="project-frame active">
+                <nav class="frame-navbar">
+                  <div class="brand-logo">
+                    <span class="index">01</span> Runway — Native iOS
+                  </div>
+                  <button type="button" class="btn-project-action">
+                    <span>View Project</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </nav>
+                <div class="hero-banner">
+                  <div class="overlay-gradient"></div>
+                  <img src="assets/01.png" alt="Native iOS" />
+                  <div class="showcase-project-details">
+                    <div class="showcase-project-tag">
+                      iOS System Architecture
+                    </div>
+                    <h2 class="hero-headline">
+                      Runway — Native<br />iOS Design
+                    </h2>
+                  </div>
                 </div>
-                <button type="button" class="btn-project-action">
-                  <span>View Project</span>
-                  <span class="btn-icon">➔</span>
-                </button>
-              </nav>
-              <div class="hero-banner">
-                <div class="overlay-gradient"></div>
-                <img src="assets/01.png" alt="Native iOS">
-                <div class="showcase-project-details">
-                  <div class="showcase-project-tag">iOS System Architecture</div>
-                  <h2 class="hero-headline">Runway — Native<br>iOS Design</h2>
+              </div>
+
+              <div class="project-frame next-in-line">
+                <nav class="frame-navbar">
+                  <div class="brand-logo">
+                    <span class="index">02</span> Runway — Native Android
+                  </div>
+                  <button type="button" class="btn-project-action">
+                    <span>View Project</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </nav>
+                <div class="hero-banner">
+                  <div class="overlay-gradient"></div>
+                  <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80"
+                    alt="Native Android"
+                  />
+                  <div class="showcase-project-details">
+                    <div class="showcase-project-tag">Android UI Ecosystem</div>
+                    <h2 class="hero-headline">
+                      Runway — Native<br />Android Design
+                    </h2>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project-frame next-in-line">
+                <nav class="frame-navbar">
+                  <div class="brand-logo">
+                    <span class="index">03</span> Runway — Fintech Case Study
+                  </div>
+                  <button type="button" class="btn-project-action">
+                    <span>View Project</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </nav>
+                <div class="hero-banner">
+                  <div class="overlay-gradient"></div>
+                  <img
+                    src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1600&q=80"
+                    alt="Fintech Case Study"
+                  />
+                  <div class="showcase-project-details">
+                    <div class="showcase-project-tag">Case Study</div>
+                    <h2 class="hero-headline">
+                      Turn Your Finances<br />Into Smarter Decisions
+                    </h2>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project-frame next-in-line">
+                <nav class="frame-navbar">
+                  <div class="brand-logo">
+                    <span class="index">04</span> Component System
+                  </div>
+                  <button type="button" class="btn-project-action">
+                    <span>View Project</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </nav>
+                <div class="hero-banner">
+                  <div class="overlay-gradient"></div>
+                  <img
+                    src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=1600&q=80"
+                    alt="Design Infrastructure"
+                  />
+                  <div class="showcase-project-details">
+                    <div class="showcase-project-tag">Design Primitives</div>
+                    <h2 class="hero-headline">
+                      Headless UI Design<br />System Library
+                    </h2>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div class="project-frame next-in-line">
-              <nav class="frame-navbar">
-                <div class="brand-logo">
-                  <span class="index">02</span> Runway — Native Android
-                </div>
-                <button type="button" class="btn-project-action">
-                  <span>View Project</span>
-                  <span class="btn-icon">➔</span>
-                </button>
-              </nav>
-              <div class="hero-banner">
-                <div class="overlay-gradient"></div>
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80" alt="Native Android">
-                <div class="showcase-project-details">
-                  <div class="showcase-project-tag">Android UI Ecosystem</div>
-                  <h2 class="hero-headline">Runway — Native<br>Android Design</h2>
-                </div>
-              </div>
-            </div>
-
-            <div class="project-frame next-in-line">
-              <nav class="frame-navbar">
-                <div class="brand-logo">
-                  <span class="index">03</span> Runway — Fintech Case Study
-                </div>
-                <button type="button" class="btn-project-action">
-                  <span>View Project</span>
-                  <span class="btn-icon">➔</span>
-                </button>
-              </nav>
-              <div class="hero-banner">
-                <div class="overlay-gradient"></div>
-                <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1600&q=80" alt="Fintech Case Study">
-                <div class="showcase-project-details">
-                  <div class="showcase-project-tag">Case Study</div>
-                  <h2 class="hero-headline">Turn Your Finances<br>Into Smarter Decisions</h2>
-                </div>
-              </div>
-            </div>
-
-            <div class="project-frame next-in-line">
-              <nav class="frame-navbar">
-                <div class="brand-logo">
-                  <span class="index">04</span> Component System
-                </div>
-                <button type="button" class="btn-project-action">
-                  <span>View Project</span>
-                  <span class="btn-icon">➔</span>
-                </button>
-              </nav>
-              <div class="hero-banner">
-                <div class="overlay-gradient"></div>
-                <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=1600&q=80" alt="Design Infrastructure">
-                <div class="showcase-project-details">
-                  <div class="showcase-project-tag">Design Primitives</div>
-                  <h2 class="hero-headline">Headless UI Design<br>System Library</h2>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-  </main>
-
-  <!-- Footer -->
-  <footer class="ux-footer">
-    <div class="footer-glow" aria-hidden="true"></div>
-    <div class="footer-container">
-
-      <div class="footer-top">
-        <div class="cta-text">
-          <span class="status-badge">
-            <span class="status-dot" aria-hidden="true"></span> Available for new projects
-          </span>
-          <h2 class="footer-heading">Have a project in mind?<br>Let&rsquo;s collaborate.</h2>
+    <!-- Footer -->
+    <footer class="ux-footer">
+      <div class="footer-glow" aria-hidden="true"></div>
+      <div class="footer-container">
+        <div class="footer-top">
+          <div class="cta-text">
+            <span class="status-badge">
+              <span class="status-dot" aria-hidden="true"></span> Available for
+              new projects
+            </span>
+            <h2 class="footer-heading">
+              Have a project in mind?<br />Let&rsquo;s collaborate.
+            </h2>
+          </div>
+          <a href="mailto:dhananjay.sagar@gmail.com" class="btn-footer-cta">
+            <span>Get in Touch</span>
+            <span class="cta-icon" aria-hidden="true">&#8599;</span>
+          </a>
         </div>
-        <a href="mailto:dhananjay.sagar@gmail.com" class="btn-footer-cta">
-          <span>Get in Touch</span>
-          <span class="cta-icon" aria-hidden="true">&#8599;</span>
-        </a>
-      </div>
 
-      <div class="footer-divider" aria-hidden="true"></div>
+        <div class="footer-divider" aria-hidden="true"></div>
 
-      <div class="footer-middle">
-        <div class="footer-brand">
-          <div class="footer-logo">PORTFOLIO<span aria-hidden="true">.</span></div>
-          <p class="brand-sub">
-            Crafting high-impact digital products, design systems, and seamless user experiences.
+        <div class="footer-middle">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              PORTFOLIO<span aria-hidden="true">.</span>
+            </div>
+            <p class="brand-sub">
+              Crafting high-impact digital products, design systems, and
+              seamless user experiences.
+            </p>
+          </div>
+
+          <nav class="footer-links-grid" aria-label="Footer">
+            <div class="link-column">
+              <h4>Navigation</h4>
+              <a href="#showcase">Selected Work</a>
+              <a href="#process">UX Process</a>
+              <a href="#tools">Design Arsenal</a>
+              <a
+                href="RESUMEFORPORTFOLIO.HTML"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Resume</a
+              >
+            </div>
+
+            <div class="link-column">
+              <h4>Socials</h4>
+              <a
+                href="https://linkedin.com/in/dhananjaysagar"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+                <span class="link-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+              <a
+                href="https://behance.net/dhanajayrajput"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Behance
+                <span class="link-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="copyright">
+            &copy; 2026 Designed &amp; Built with Precision. All rights
+            reserved.
           </p>
+          <button type="button" class="btn-back-to-top" id="btn-back-to-top">
+            <span>Back to Top</span>
+            <span class="arrow" aria-hidden="true">&uarr;</span>
+          </button>
         </div>
-
-        <nav class="footer-links-grid" aria-label="Footer">
-          <div class="link-column">
-            <h4>Navigation</h4>
-            <a href="#showcase">Selected Work</a>
-            <a href="#process">UX Process</a>
-            <a href="#tools">Design Arsenal</a>
-            <a href="RESUMEFORPORTFOLIO.HTML" target="_blank" rel="noopener noreferrer">Resume</a>
-          </div>
-
-          <div class="link-column">
-            <h4>Socials</h4>
-            <a href="https://linkedin.com/in/dhananjaysagar" target="_blank" rel="noopener noreferrer">
-              LinkedIn <span class="link-arrow" aria-hidden="true">&#8599;</span>
-            </a>
-            <a href="https://behance.net/dhanajayrajput" target="_blank" rel="noopener noreferrer">
-              Behance <span class="link-arrow" aria-hidden="true">&#8599;</span>
-            </a>
-          </div>
-        </nav>
       </div>
+    </footer>
 
-      <div class="footer-bottom">
-        <p class="copyright">&copy; 2026 Designed &amp; Built with Precision. All rights reserved.</p>
-        <button type="button" class="btn-back-to-top" id="btn-back-to-top">
-          <span>Back to Top</span>
-          <span class="arrow" aria-hidden="true">&uarr;</span>
+    <!-- Full case study overlay -->
+    <div class="case-study-page" id="case-study-page" aria-hidden="true">
+      <header class="case-study-header">
+        <button
+          type="button"
+          class="btn-floating-arrow"
+          id="btn-back"
+          title="Back to Showcase"
+          aria-label="Back to showcase"
+        >
+          ←
         </button>
+        <p class="case-study-heading" id="case-study-heading">Case Study</p>
+      </header>
+      <div class="case-study-scroll" id="case-study-scroll">
+        <div class="case-study-content" id="case-study-content"></div>
       </div>
-
     </div>
-  </footer>
 
-  <!-- Full case study overlay -->
-  <div class="case-study-page" id="case-study-page" aria-hidden="true">
-    <header class="case-study-header">
-      <button type="button" class="btn-floating-arrow" id="btn-back" title="Back to Showcase" aria-label="Back to showcase">←</button>
-      <p class="case-study-heading" id="case-study-heading">Case Study</p>
-    </header>
-    <div class="case-study-scroll" id="case-study-scroll">
-      <div class="case-study-content" id="case-study-content"></div>
-    </div>
-  </div>
-
-  <script src="js/portfolio.js"></script>
-  <script type="module" src="js/tools.js"></script>
-  <script src="js/project-ui.js"></script>
-</body>
+    <script src="js/portfolio.js"></script>
+    <script type="module" src="js/tools.js"></script>
+    <script src="js/project-ui.js"></script>
+  </body>
 </html>

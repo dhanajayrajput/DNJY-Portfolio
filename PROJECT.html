@@ -516,11 +516,10 @@
 
     <!-- JAVASCRIPT PAGE TURN & AUTO-OPEN ENGINE -->
     <script>
-        const pages = document.querySelectorAll('.page');
-        const bookContainer = document.getElementById('bookContainer');
-        const hudHint = document.getElementById('hudHint');
-        let currentFlippedIndex = -1; // -1 = Completely Closed
-        let isScrollThrottled = false;
+      const pages = document.querySelectorAll(".page");
+      const bookContainer = document.getElementById("bookContainer");
+      const hudHint = document.getElementById("hudHint");
+      let currentFlippedIndex = -1; // -1 = Completely Closed
 
         // AUTOMATICALLY OPEN BOOK AFTER 2 SECONDS
         window.addEventListener('DOMContentLoaded', () => {

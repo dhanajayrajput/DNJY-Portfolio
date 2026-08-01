@@ -5,8 +5,8 @@
 }
 
 /* =========================================
-           GLOBAL DARK THEME & CURSOR
-           ========================================= */
+   GLOBAL DARK THEME & CURSOR
+   ========================================= */
 * {
   margin: 0;
   padding: 0;
@@ -338,8 +338,8 @@ nav {
 }
 
 /* =========================================
-           SCROLL TRACK & LAYOUT
-           ========================================= */
+   SCROLL TRACK & LAYOUT
+   ========================================= */
 #scrollTrack {
   position: relative;
   width: 100%;
@@ -489,8 +489,8 @@ nav {
 }
 
 /* =========================================
-           3D STICKY IMAGE CARD (DYNAMIC)
-           ========================================= */
+   3D STICKY IMAGE CARD (DYNAMIC)
+   ========================================= */
 .sticky-visual-container {
   position: fixed;
   top: 0;
@@ -581,11 +581,11 @@ nav {
 }
 
 /* =========================================
-           4. TOOL CUBES SECTION STYLES
-           ========================================= */
+   4. TOOL CUBES SECTION STYLES
+   ========================================= */
 .tools-section {
   position: relative;
-  z-index: 20; /* Ensure it overlaps the fixed sticky card */
+  z-index: 20;
   background-color: #050505;
   min-height: 100vh;
   display: flex;
@@ -604,7 +604,7 @@ nav {
     0 40px 100px rgba(0, 0, 0, 0.9),
     inset 0 0 40px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  cursor: none; /* Keep consistent custom cursor */
+  cursor: none;
 }
 
 #header {
