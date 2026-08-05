@@ -152,13 +152,13 @@ function initScrollCardAnimation() {
   if (!cardWrapper || !card3D || !faceAImg || !faceBImg || !projectUI) return;
 
   const images = [
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop", // 0: Hero
-    "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop", // 1: Empathize
-    "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop", // 2: Define
-    "https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=800&auto=format&fit=crop", // 3: Ideate
-    "https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=800&auto=format&fit=crop", // 4: Prototype
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop", // 5: Test
-    "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80", // 6: PROJECT CARD
+    "assets/dhnj.jpg", // 0: Hero
+    "assets/design-process/discover.png", // 1: Discover
+    "assets/design-process/define.png", // 2: Define
+    "assets/design-process/ideate.png", // 3: Ideate
+    "assets/design-process/prototype.png", // 4: Prototype
+    "assets/design-process/testing.png", // 5: Test
+    "assets/design-process/prototype.png", // 6: PROJECT CARD
   ];
 
   let currentScroll = 0;
@@ -220,11 +220,11 @@ function initScrollCardAnimation() {
     let nextBSrc = faceBImg.src;
 
     if (baseIndex % 2 === 0) {
-      nextASrc = images[baseIndex] || images[6];
-      if (baseIndex + 1 <= 6) nextBSrc = images[baseIndex + 1];
+      nextASrc = images[baseIndex] || images[7];
+      if (baseIndex + 1 <= 7) nextBSrc = images[baseIndex + 1];
     } else {
-      nextBSrc = images[baseIndex] || images[6];
-      if (baseIndex + 1 <= 6) nextASrc = images[baseIndex + 1];
+      nextBSrc = images[baseIndex] || images[7];
+      if (baseIndex + 1 <= 7) nextASrc = images[baseIndex + 1];
     }
 
     if (lastFaceASrc !== nextASrc) {
