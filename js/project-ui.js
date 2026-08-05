@@ -43,7 +43,27 @@ document.addEventListener("DOMContentLoaded", () => {
       "assets/17.png",
       "assets/18.png",
     ],
-    1: [], // Runway — Native Android (add assets when ready)
+    1: [
+      "assets/travel/1.png",
+      "assets/travel/2.png",
+      "assets/travel/3.png",
+      "assets/travel/4.png",
+      "assets/travel/5.png",
+      "assets/travel/6.png",
+      "assets/travel/7.png",
+      "assets/travel/8.png",
+      "assets/travel/9.png",
+      "assets/travel/10.png",
+      "assets/travel/11.png",
+      "assets/travel/12.png",
+      "assets/travel/13.png",
+      "assets/travel/14.png",
+      "assets/travel/15.png",
+      "assets/travel/16.png",
+      "assets/travel/17.png",
+      "assets/travel/18.png",
+      "assets/travel/19.png",
+    ],
     2: [], // Runway — Fintech Case Study (add assets when ready)
     3: [], // Component System (add assets when ready)
   };
