@@ -153,7 +153,7 @@ function initScrollCardAnimation() {
 
   const images = [
     "assets/dhnj.jpg", // 0: Hero
-    "assets/design-process/define.png", // 1: Discover
+    "assets/design-process/discover.png", // 1: Discover
     "assets/design-process/define.png", // 2: Define
     "assets/design-process/ideate.png", // 3: Ideate
     "assets/design-process/prototype.png", // 4: Prototype
@@ -220,11 +220,11 @@ function initScrollCardAnimation() {
     let nextBSrc = faceBImg.src;
 
     if (baseIndex % 2 === 0) {
-      nextASrc = images[baseIndex] || images[6];
-      if (baseIndex + 1 <= 6) nextBSrc = images[baseIndex + 1];
+      nextASrc = images[baseIndex] || images[7];
+      if (baseIndex + 1 <= 7) nextBSrc = images[baseIndex + 1];
     } else {
-      nextBSrc = images[baseIndex] || images[6];
-      if (baseIndex + 1 <= 6) nextASrc = images[baseIndex + 1];
+      nextBSrc = images[baseIndex] || images[7];
+      if (baseIndex + 1 <= 7) nextASrc = images[baseIndex + 1];
     }
 
     if (lastFaceASrc !== nextASrc) {

@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "assets/13.png",
       "assets/14.png",
       "assets/15.png",
+      "assets/16.png",
+      "assets/17.png",
+      "assets/18.png",
     ],
     1: [], // Runway — Native Android (add assets when ready)
     2: [], // Runway — Fintech Case Study (add assets when ready)

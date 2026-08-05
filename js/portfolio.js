@@ -193,7 +193,7 @@ syncLayoutMode();
 
 const images = [
   "assets/dhnj.jpg", // 0: Hero
-  "assets/design-process/define.png", // 1: Discover
+  "assets/design-process/discover.png", // 1: Discover
   "assets/design-process/define.png", // 2: Define
   "assets/design-process/ideate.png", // 3: Ideate
   "assets/design-process/prototype.png", // 4: Prototype
