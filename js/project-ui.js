@@ -64,7 +64,18 @@ document.addEventListener("DOMContentLoaded", () => {
       "assets/travel/18.png",
       "assets/travel/19.png",
     ],
-    2: [], // Runway — Fintech Case Study (add assets when ready)
+    2: [
+      "assets/skill-gain/0.png",
+      "assets/skill-gain/1.png",
+      "assets/skill-gain/2.png",
+      "assets/skill-gain/3.png",
+      "assets/skill-gain/4.png",
+      "assets/skill-gain/5.png",
+      "assets/skill-gain/6.png",
+      "assets/skill-gain/7.png",
+      "assets/skill-gain/8.png",
+      "assets/skill-gain/9.png",
+    ],
     3: [], // Component System (add assets when ready)
   };
 
