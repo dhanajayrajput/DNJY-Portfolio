@@ -16,10 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let isCaseStudyOpen = false;
   let savedScrollY = 0;
 
-  const projectTitles = frames.map((frame) => {
-    const logo = frame.querySelector(".brand-logo");
-    return logo ? logo.textContent.replace(/\s+/g, " ").trim() : "Case Study";
-  });
+  const projectTitles = [
+    "Runway — Native iOS",
+    "Runway — Native Android",
+    "Runway — Fintech Case Study",
+  ];
 
   // Per-project case study screens — add image paths as assets are provided
   const projectScreens = {
@@ -76,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "assets/skill-gain/8.png",
       "assets/skill-gain/9.png",
     ],
-    3: [], // Component System (add assets when ready)
   };
 
   function updateStackPositions(index) {
