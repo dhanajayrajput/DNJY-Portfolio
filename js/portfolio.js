@@ -265,3 +265,55 @@ function renderEngine() {
   requestAnimationFrame(renderEngine);
 }
 renderEngine();
+
+/* ==============================================
+   RESUME OVERLAY
+   ============================================== */
+(function initResumeOverlay() {
+  const resumePage = document.getElementById("resume-page");
+  const resumeFrame = document.getElementById("resume-frame");
+  const resumeLinks = document.querySelectorAll(
+    "#btn-open-resume, .btn-open-resume"
+  );
+  const RESUME_SRC = "RESUMEFORPORTFOLIO.HTML";
+  let isResumeOpen = false;
+  let savedScrollY = 0;
+
+  function openResume(e) {
+    if (e) e.preventDefault();
+    if (isResumeOpen) return;
+
+    isResumeOpen = true;
+    savedScrollY = window.scrollY;
+
+    if (resumeFrame.getAttribute("src") !== RESUME_SRC) {
+      resumeFrame.src = RESUME_SRC;
+    }
+
+    resumePage.classList.add("active");
+    resumePage.setAttribute("aria-hidden", "false");
+    document.body.classList.add("resume-open");
+  }
+
+  function closeResume() {
+    if (!isResumeOpen) return;
+
+    isResumeOpen = false;
+    resumePage.classList.remove("active");
+    resumePage.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("resume-open");
+    window.scrollTo(0, savedScrollY);
+  }
+
+  resumeLinks.forEach((link) => {
+    link.addEventListener("click", openResume);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isResumeOpen) closeResume();
+  });
+
+  window.addEventListener("message", (e) => {
+    if (e.data === "close-resume") closeResume();
+  });
+})();

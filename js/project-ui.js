@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Runway — Native iOS",
     "Runway — Native Android",
     "Runway — Fintech Case Study",
+    "Telecalling Platform",
   ];
 
   // Per-project case study screens — add image paths as assets are provided
@@ -66,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "assets/travel/19.png",
     ],
     2: [
-      "assets/skill-gain/0.png",
       "assets/skill-gain/1.png",
       "assets/skill-gain/2.png",
       "assets/skill-gain/3.png",
@@ -76,6 +76,24 @@ document.addEventListener("DOMContentLoaded", () => {
       "assets/skill-gain/7.png",
       "assets/skill-gain/8.png",
       "assets/skill-gain/9.png",
+    ],
+    3: [
+      "assets/tele-call/1.png",
+      "assets/tele-call/2.png",
+      "assets/tele-call/3.png",
+      "assets/tele-call/4.png",
+      "assets/tele-call/5.png",
+      "assets/tele-call/6.png",
+      "assets/tele-call/7.png",
+      "assets/tele-call/8.png",
+      "assets/tele-call/9.png",
+      "assets/tele-call/10.png",
+      "assets/tele-call/11.png",
+      "assets/tele-call/12.png",
+      "assets/tele-call/13.png",
+      "assets/tele-call/14.png",
+      "assets/tele-call/15.png",
+      "assets/tele-call/16.png",
     ],
   };
 
