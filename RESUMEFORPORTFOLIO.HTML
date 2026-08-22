@@ -640,6 +640,7 @@
     <a
       href="index.html"
       class="btn-close-resume"
+      id="btn-close-resume"
       title="Back to website"
       aria-label="Close resume and return to website"
       >×</a
@@ -915,6 +916,17 @@
     </div>
 
     <script>
+      // When embedded in the portfolio overlay, close via parent instead of navigating
+      const closeResumeBtn = document.getElementById("btn-close-resume");
+      if (closeResumeBtn) {
+        closeResumeBtn.addEventListener("click", (e) => {
+          if (window.parent !== window) {
+            e.preventDefault();
+            window.parent.postMessage("close-resume", "*");
+          }
+        });
+      }
+
       // Smooth 3D Tilt Effect (pointer devices only)
       const cards = document.querySelectorAll(".card");
       const tiltQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
