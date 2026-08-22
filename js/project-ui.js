@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let savedScrollY = 0;
 
   const projectTitles = [
-    "Runway — Native iOS",
-    "Runway — Native Android",
-    "Runway — Fintech Case Study",
-    "Telecalling Platform",
+    "yogiini — Health Tracking with AI",
+    "Travelora — Travel Easy",
+    "Skill Gain",
+    "Tele Calling — Smart Call With AI",
   ];
 
   // Per-project case study screens — add image paths as assets are provided
